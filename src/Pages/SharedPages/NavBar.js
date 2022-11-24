@@ -7,7 +7,24 @@ const NavBar = () => {
   const [theme, setTheme] = useState(null);
   const [darkIcon, setDarkIcon] = useState(true);
   const localStorageDarkIcon = localStorage.getItem("dark-icon");
- 
+  useEffect(() => {
+    if (
+      window.matchMedia("(prefers-color-scheme: dark)").matches ||
+      localStorageDarkIcon === false
+    ) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }, [localStorageDarkIcon]);
+
+  useEffect(() => {
+    if (theme === "dark" || !localStorageDarkIcon || !darkIcon) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme, localStorageDarkIcon, darkIcon]);
 
 
 
