@@ -1,14 +1,14 @@
 import React from 'react';
-import Header from './Header';
+import HomeHeader from './HomeHeader';
 
 const Home = () => {
   return (
-    <section>
-      <div>
-        <Header />
-      </div>
+    <main>
+      <header>
+        <HomeHeader />
+      </header>
       hello from home
-    </section>
+    </main>
   );
 };
 
