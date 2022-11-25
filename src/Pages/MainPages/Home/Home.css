@@ -1,0 +1,11 @@
+.custom-home{
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+.custom-home > img{
+  transition: all 0.3s linear;
+}
+.custom-home:hover > img{
+  /* transform: translateY(-20px); */
+  transform: scale(1.2);
+}

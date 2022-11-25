@@ -39,8 +39,8 @@ const NavBar = () => {
           to="/home"
           className={({ isActive }) =>
             isActive
-              ? "font-bold text-lg tracking-wide text-primary dark:text-info"
-              : "font-bold text-lg tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+              ? "font-bold tracking-wide text-primary dark:text-info"
+              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
           }
         >
           Home
@@ -49,14 +49,40 @@ const NavBar = () => {
       <li>
         <NavLink
           onClick={() => setIsMenuOpen(false)}
+          to="/all-categories"
+          className={({ isActive }) =>
+            isActive
+              ? "font-bold tracking-wide text-primary dark:text-info"
+              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+          }
+        >
+          All Categories
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
           to="/blog"
           className={({ isActive }) =>
             isActive
-              ? "font-bold text-lg tracking-wide text-primary dark:text-info"
-              : "font-bold text-lg tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+              ? "font-bold tracking-wide text-primary dark:text-info"
+              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
           }
         >
           Blog
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          onClick={() => setIsMenuOpen(false)}
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive
+              ? "font-bold tracking-wide text-primary dark:text-info"
+              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+          }
+        >
+          Dashboard
         </NavLink>
       </li>
       <hr className="my-6 lg:my-0 lg:hidden" />
@@ -66,8 +92,8 @@ const NavBar = () => {
           to="/login"
           className={({ isActive }) =>
             isActive
-              ? "px-8 py-2 btn text-base font-bold tracking-wide text-base-100 bg-primary border-2 border-transparent hover:text-base-100 hover:bg-primary hover:border-transparent"
-              : "px-8 py-2 btn text-base font-bold tracking-wide text-primary dark:text-info bg-transparent border-2 border-primary dark:border-info transition-all duration-300 hover:text-base-100 hover:bg-primary hover:border-transparent dark:hover:bg-primary dark:hover:border-transparent dark:hover:text-base-100"
+              ? "px-8 py-2 btn font-bold tracking-wide text-base-100 bg-primary border-2 border-transparent hover:text-base-100 hover:bg-primary hover:border-transparent"
+              : "px-8 py-2 btn font-bold tracking-wide text-primary dark:text-info bg-transparent border-2 border-primary dark:border-info transition-all duration-300 hover:text-base-100 hover:bg-primary hover:border-transparent dark:hover:bg-primary dark:hover:border-transparent dark:hover:text-base-100"
           }
         >
           Login
@@ -76,7 +102,7 @@ const NavBar = () => {
       <li>
         <button
           onClick={() => setIsMenuOpen(false)}
-          className="px-5 py-2 btn text-base font-bold tracking-wide text-secondary dark:text-error bg-transparent border-2 border-secondary dark:border-error transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:bg-secondary dark:hover:border-transparent dark:hover:text-base-100"
+          className="px-5 py-2 btn font-bold tracking-wide text-secondary dark:text-error bg-transparent border-2 border-secondary dark:border-error transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:bg-secondary dark:hover:border-transparent dark:hover:text-base-100"
         >
           Sign Out
         </button>
@@ -95,7 +121,7 @@ const NavBar = () => {
               className="w-48 h-16"
             />
           </Link>
-          <ul className="items-center hidden space-x-8 lg:flex">
+          <ul className="items-center hidden space-x-5 lg:flex">
             <li className="lg:mt-2">
               <label className="swap swap-rotate">
                 <input type="checkbox" />

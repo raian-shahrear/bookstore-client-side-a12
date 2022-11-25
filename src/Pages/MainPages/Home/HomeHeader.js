@@ -7,7 +7,7 @@ import headerImg from "../../../Assets/animation/reading-book.json";
 const HomeHeader = () => {
   return (
     <div>
-      <div className="overflow-hidden bg-gray-100 dark:bg-gray-900">
+      <div className="overflow-hidden bg-gray-100 dark:bg-gray-800">
         <div className="px-4 md:px-24 lg:px-0 py-10 lg:py-0 mx-auto md:max-w-full lg:max-w-screen-2xl">
           <div className="flex flex-col lg:flex-row-reverse items-center justify-between">
             <div className="w-full text-center lg:text-start mb-12 lg:pl-16 lg:mb-0 lg:w-7/12">
@@ -21,7 +21,7 @@ const HomeHeader = () => {
                 (need to pay some).
               </p>
               <Link
-                to="/"
+                to="/all-categories"
                 className="lg:mt-6 inline-flex md:text-lg items-center font-bold tracking-wider transition-all duration-300 text-primary hover:text-accent hover:translate-y-1 hover:lg:translate-x-1 hover:lg:translate-y-0 dark:text-info dark:hover:text-primary"
               >
                 Explore Our Bookstore
