@@ -11,47 +11,47 @@ import cat6 from "../../../Assets/categories/health-book.png"
 
 const HomeCategories = () => {
   return (
-    <div className='flex flex-wrap justify-between items-center gap-6'>
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+    <div className='flex flex-wrap justify-between gap-6'>
+      <Link className='w-44 h-full block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat1} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>Education & Reference</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3 custom-home-p'>Education & Reference</p>
       </Link>
 
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+      <Link className='w-44 block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat2} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>Children's Fantasy</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3'>Children's Fantasy</p>
       </Link>
 
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+      <Link className='w-44 block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat3} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>Technology & Research</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3'>Technology & Research</p>
       </Link>
 
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+      <Link className='w-44 block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat4} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>World History</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3'>World History</p>
       </Link>
 
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+      <Link className='w-44 block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat5} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>Mystery & Suspense</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3'>Mystery & Suspense</p>
       </Link>
 
-      <Link className='w-44 block'>
-        <div className='bg-gray-200 hover: h-44 w-44 rounded-full flex justify-center items-center hover:bg-[#a8ceeb] custom-home'>
+      <Link className='w-44 block custom-home-cat'>
+        <div className='bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center'>
           <img src={cat6} alt="" className='w-28 h-28 z-10' />
         </div>
-        <p className='text-lg text-center font-bold text-accent dark:text-info mt-3'>Health & Fitness</p>
+        <p className='text-lg text-center font-bold text-accent dark:text-base-100 mt-3'>Health & Fitness</p>
       </Link>
     </div>
   );

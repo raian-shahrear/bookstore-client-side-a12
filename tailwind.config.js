@@ -7,7 +7,7 @@ module.exports = {
       {
         bookstoretheme: {
           primary: "#0B61A3",
-          secondary: "#760E0E",
+          secondary: "#FF9400",
           accent: "#001F43",
           neutral: "#3D4451",
           "base-100": "#FFFFFF",

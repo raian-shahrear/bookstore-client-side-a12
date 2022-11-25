@@ -102,7 +102,7 @@ const NavBar = () => {
       <li>
         <button
           onClick={() => setIsMenuOpen(false)}
-          className="px-5 py-2 btn font-bold tracking-wide text-secondary dark:text-error bg-transparent border-2 border-secondary dark:border-error transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:bg-secondary dark:hover:border-transparent dark:hover:text-base-100"
+          className="px-5 py-2 btn font-bold tracking-wide text-secondary dark:text-warning bg-transparent border-2 border-secondary transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:text-base-100"
         >
           Sign Out
         </button>

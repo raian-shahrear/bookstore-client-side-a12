@@ -8,7 +8,7 @@ const HomeReview = () => {
   return (
     <div>
       <h2 className="text-4xl font-bold text-accent dark:text-info text-center mb-8">
-        What Our Buyers Said
+        What Our Customers Said
       </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 bg-gray-100 dark:bg-gray-800">

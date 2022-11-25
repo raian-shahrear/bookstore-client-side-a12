@@ -1,11 +1,20 @@
-.custom-home{
-  transition: all 0.3s linear;
-  cursor: pointer;
-}
-.custom-home > img{
+.custom-home-cat{
   transition: all 0.3s linear;
 }
-.custom-home:hover > img{
-  /* transform: translateY(-20px); */
-  transform: scale(1.2);
+.custom-home-cat > div{
+  transition: all 0.3s linear;
 }
+.custom-home-cat > div > img{
+  transition: all 0.3s linear;
+}
+.custom-home-cat > p{
+  transition: all 0.3s linear;
+}
+
+.custom-home-cat:hover div{
+  background-color: #a8ceeb;
+}
+.custom-home-cat:hover img{
+  transform: scale(1.15) translateY(-20px);
+}
+
