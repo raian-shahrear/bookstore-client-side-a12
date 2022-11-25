@@ -8,7 +8,7 @@ const HomeReview = () => {
   return (
     <div>
       <h2 className="text-4xl font-bold text-accent dark:text-info text-center mb-8">
-        Happy Client
+        What Our Buyers Said
       </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="container flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 bg-gray-100 dark:bg-gray-800">
@@ -37,7 +37,7 @@ const HomeReview = () => {
               <span className="text-xl font-bold">4.6</span>
             </div>
           </div>
-          <div className="p-4 space-y-2 text-sm text-accent dark:text-gray-300">
+          <div className="p-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>
             Until I feared I would lose it, I never loved to read. One does not love breathing. You can never get a cup of tea large enough or a book long enough to suit me.
             </p>
@@ -70,7 +70,7 @@ const HomeReview = () => {
               <span className="text-xl font-bold">4.5</span>
             </div>
           </div>
-          <div className="p-4 space-y-2 text-sm text-accent dark:text-gray-300">
+          <div className="p-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>
             The more that you read, the more things you will know. The more that you learn, the more places you’ll go. I kept always two books in my pocket, one to read, one to write in.
             </p>
@@ -103,7 +103,7 @@ const HomeReview = () => {
               <span className="text-xl font-bold">4.7</span>
             </div>
           </div>
-          <div className="p-4 space-y-2 text-sm text-accent dark:text-gray-300">
+          <div className="p-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>
             I find television very educating. Every time somebody turns on the set, I go into the other room and read a book. So please, oh please, we beg, we pray, go throw your TV set away, and in its place you can install a lovely bookshelf on the wall.
             </p>
