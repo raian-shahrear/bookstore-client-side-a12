@@ -1,6 +1,8 @@
 import React from 'react';
+import HomeAdvertisement from './HomeAdvertisement';
 import HomeCategories from './HomeCategories';
 import HomeHeader from './HomeHeader';
+import HomeReview from './HomeReview';
 
 const Home = () => {
   return (
@@ -10,6 +12,12 @@ const Home = () => {
       </header>
       <section className='px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl py-20'>
         <HomeCategories />
+      </section>
+      <section className='px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl pb-20'>
+        <HomeAdvertisement />
+      </section>
+      <section className='px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl pb-20'>
+        <HomeReview />
       </section>
     </main>
   );
