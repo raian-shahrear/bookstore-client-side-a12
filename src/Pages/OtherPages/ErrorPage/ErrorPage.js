@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 const ErrorPage = () => {
   const error = useRouteError();
   return (
-    <div className="h-screen flex flex-col items-center justify-center text-center dark:bg-accent">
-      <div className="text-secondary dark:text-primary">
+    <div className="h-screen flex flex-col items-center justify-center text-center dark:bg-gray-900">
+      <div className="text-accent dark:text-info">
         <h2 className="text-8xl font-bold">{error.status}</h2>
         <h3 className="text-3xl font-bold mt-8">{error.message || error.statusText}</h3>
       </div>
