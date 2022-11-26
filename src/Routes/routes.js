@@ -3,7 +3,9 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Root from "../Layouts/Root";
 import Blog from "../Pages/Blog/Blog";
 import AllCategories from "../Pages/MainPages/Categories/AllCategories/AllCategories";
+import AddAProduct from "../Pages/MainPages/Dashboard/AddAProduct";
 import Dashboard from "../Pages/MainPages/Dashboard/Dashboard";
+import MyOrders from "../Pages/MainPages/Dashboard/MyOrders";
 import Home from "../Pages/MainPages/Home/Home";
 import Login from "../Pages/MainPages/Login/Login";
 import SignUp from "../Pages/MainPages/SignUp/SignUp";
@@ -50,6 +52,14 @@ const routers = createBrowserRouter([
       {
         path: '/dashboard',
         element: <PrivateRoute><Dashboard /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-orders',
+        element: <PrivateRoute><MyOrders /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/add-a-product',
+        element: <PrivateRoute><AddAProduct /></PrivateRoute>
       },
     ]
   }

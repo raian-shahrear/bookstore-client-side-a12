@@ -128,7 +128,7 @@ const Footer = () => {
             <span className="font-semibold tracking-wide text-primary dark:text-info">
               Social
             </span>
-            <div className="flex items-center mt-1 space-x-3 mt-2">
+            <div className="flex items-center mt-1 space-x-3">
               <a
                 href="https://twitter.com/login"
                 title="twitter"
@@ -180,8 +180,8 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
-          <p className="text-sm text-accent dark:text-base-100">
+        <div className="flex flex-col-reverse justify-between items-center pt-5 pb-10 border-t lg:flex-row">
+          <p className="text-sm text-accent dark:text-base-100 mt-4 lg:mt-0">
             &copy; Copyright {requireDate} <span className="font-bold">BookStore</span>. All rights reserved.
           </p>
           <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
