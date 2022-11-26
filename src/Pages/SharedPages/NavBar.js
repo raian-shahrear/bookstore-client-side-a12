@@ -4,6 +4,7 @@ import logoLight from "../../logo-light.png";
 import logoDark from "../../logo-dark.png";
 import { UserContext } from "../../Contexts/AuthContext";
 import { toast } from "react-toastify";
+import { RiMenuUnfoldFill } from "react-icons/ri";
 
 const NavBar = () => {
   const { user, signOutUser } = useContext(UserContext);
@@ -201,7 +202,7 @@ const NavBar = () => {
             <button
               aria-label="Open Menu"
               title="Open Menu"
-              className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent"
+              className="p-2 ml-48 sm:ml-60 md:ml-80 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent"
               onClick={() => setIsMenuOpen(true)}
             >
               <svg
@@ -298,7 +299,10 @@ const NavBar = () => {
                   <nav>
                     <ul className="flex flex-col gap-4">
                       {user?.uid && (
-                        <Link to="/" className="flex items-center gap-4 font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info">
+                        <Link
+                          to="/"
+                          className="flex items-center gap-4 font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                        >
                           <div className="avatar">
                             <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 dark:ring-offset-gray-900 ring-offset-2">
                               <img src={user?.photoURL} alt="profile-img" />
@@ -314,6 +318,13 @@ const NavBar = () => {
               </div>
             )}
           </div>
+          <label
+              htmlFor="dashboard-drawer"
+              title="dashboard-menu"
+              className="drawer-button text-2xl lg:hidden p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent cursor-pointer text-gray-600 dark:text-base-100"
+            >
+              <RiMenuUnfoldFill />
+            </label>
         </div>
       </div>
     </div>
