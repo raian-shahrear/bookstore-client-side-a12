@@ -28,22 +28,60 @@ const Login = () => {
   // }
 
   const handleLogin = (data, event) => {
-    
+    const { email, password } = data;
+    signInUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully login!");
+        // setEmailForToken(email);
+        event.target.reset();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   // reset password
   const handleResetPassword = () => {
-    
+    const email = watch("email");
+    if (email) {
+      resetPassword(email)
+        .then(() => {
+          alert("Please check the email to reset password");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   // google login
   const handleGoogleUser = () => {
-    
+    googleUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully login through Google!");
+        // setEmailForToken(user.email);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   // facebook login
   const handleFacebookUser = () => {
-    
+    facebookUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully login through Facebook!");
+        // setEmailForToken(user.email);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
