@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logoLight from "../../logo-light.png";
 import logoDark from "../../logo-dark.png";
+import { UserContext } from "../../Contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
+  const { user, signOutUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const [theme, setTheme] = useState(null);
   const [darkIcon, setDarkIcon] = useState(true);
   const localStorageDarkIcon = localStorage.getItem("dark-icon");
@@ -29,6 +33,15 @@ const NavBar = () => {
   // const handleTheme = () => {
   //   setTheme(theme === "dark" ? "light" : "dark");
   // }
+
+  // signout user
+  const handleSignOut = () => {
+    signOutUser().then(() => {
+      toast.warning("Sign Out successfully");
+      localStorage.removeItem("access-token");
+      navigate("/");
+    });
+  };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = (
@@ -72,41 +85,55 @@ const NavBar = () => {
           Blog
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          onClick={() => setIsMenuOpen(false)}
-          to="/dashboard"
-          className={({ isActive }) =>
-            isActive
-              ? "font-bold tracking-wide text-primary dark:text-info"
-              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-          }
-        >
-          Dashboard
-        </NavLink>
-      </li>
+      {user?.uid && (
+        <>
+          <li>
+            <NavLink
+              onClick={() => setIsMenuOpen(false)}
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "font-bold tracking-wide text-primary dark:text-info"
+                  : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        </>
+      )}
       <hr className="my-6 lg:my-0 lg:hidden" />
-      <li>
-        <NavLink
-          onClick={() => setIsMenuOpen(false)}
-          to="/login"
-          className={({ isActive }) =>
-            isActive
-              ? "px-8 py-2 btn font-bold tracking-wide text-base-100 bg-primary border-2 border-transparent hover:text-base-100 hover:bg-primary hover:border-transparent"
-              : "px-8 py-2 btn font-bold tracking-wide text-primary dark:text-info bg-transparent border-2 border-primary dark:border-info transition-all duration-300 hover:text-base-100 hover:bg-primary hover:border-transparent dark:hover:bg-primary dark:hover:border-transparent dark:hover:text-base-100"
-          }
-        >
-          Login
-        </NavLink>
-      </li>
-      <li>
-        <button
-          onClick={() => setIsMenuOpen(false)}
-          className="px-5 py-2 btn font-bold tracking-wide text-secondary dark:text-warning bg-transparent border-2 border-secondary transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:text-base-100"
-        >
-          Sign Out
-        </button>
-      </li>
+      {user?.uid ? (
+        <>
+          <li>
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                handleSignOut();
+              }}
+              className="px-5 py-2 btn font-bold tracking-wide text-secondary dark:text-warning bg-transparent border-2 border-secondary transition-all duration-300 hover:text-base-100 hover:bg-secondary hover:border-transparent dark:hover:text-base-100"
+            >
+              Sign Out
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <NavLink
+              onClick={() => setIsMenuOpen(false)}
+              to="/login"
+              className={({ isActive }) =>
+                isActive
+                  ? "px-8 py-2 btn font-bold tracking-wide text-base-100 bg-primary border-2 border-transparent hover:text-base-100 hover:bg-primary hover:border-transparent"
+                  : "px-8 py-2 btn font-bold tracking-wide text-primary dark:text-info bg-transparent border-2 border-primary dark:border-info transition-all duration-300 hover:text-base-100 hover:bg-primary hover:border-transparent dark:hover:bg-primary dark:hover:border-transparent dark:hover:text-base-100"
+              }
+            >
+              Login
+            </NavLink>
+          </li>
+        </>
+      )}
     </React.Fragment>
   );
 
@@ -155,6 +182,20 @@ const NavBar = () => {
               </label>
             </li>
             {menuItems}
+            {user?.uid && (
+              <Link to="/">
+                <div
+                  className="tooltip text-base-100 tooltip-bottom"
+                  data-tip={user?.displayName}
+                >
+                  <div className="avatar">
+                    <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 dark:ring-offset-gray-900 ring-offset-2">
+                      <img src={user?.photoURL} alt="profile-img" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            )}
           </ul>
           <div className="lg:hidden z-10">
             <button
@@ -255,7 +296,19 @@ const NavBar = () => {
                     </li>
                   </ul>
                   <nav>
-                    <ul className="flex flex-col gap-4">{menuItems}</ul>
+                    <ul className="flex flex-col gap-4">
+                      {user?.uid && (
+                        <Link to="/" className="flex items-center gap-4 font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info">
+                          <div className="avatar">
+                            <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 dark:ring-offset-gray-900 ring-offset-2">
+                              <img src={user?.photoURL} alt="profile-img" />
+                            </div>
+                          </div>
+                          <p>{user?.displayName}</p>
+                        </Link>
+                      )}
+                      {menuItems}
+                    </ul>
                   </nav>
                 </div>
               </div>
