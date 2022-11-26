@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import loginImg from "../../../Assets/register/login-to-study.json";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { UserContext } from "../../../Contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const { signInUser, resetPassword, googleUser, facebookUser } =
+    useContext(UserContext);
   const [displayPass, setDisplayPass] = useState(false);
   const {
     register,
@@ -13,7 +17,34 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const handleSignUp = (data) => console.log(data);
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  // get JWT from backend and set token to localStorage
+  // const [emailForToken, setEmailForToken] = useState("");
+  // const [token] = useJWToken(emailForToken);
+  // if (token) {
+  //   navigate(from, { replace: true });
+  // }
+
+  const handleLogin = (data, event) => {
+    
+  };
+
+  // reset password
+  const handleResetPassword = () => {
+    
+  };
+
+  // google login
+  const handleGoogleUser = () => {
+    
+  };
+
+  // facebook login
+  const handleFacebookUser = () => {
+    
+  };
 
   return (
     <section className="dark:bg-gray-900 dark:text-gray-100">
@@ -37,7 +68,7 @@ const Login = () => {
               </Link>
             </p>
             <form
-              onSubmit={handleSubmit(handleSignUp)}
+              onSubmit={handleSubmit(handleLogin)}
               className="space-y-8 mt-6 ng-untouched ng-pristine ng-valid"
             >
               <div className="space-y-4">
@@ -89,7 +120,10 @@ const Login = () => {
                         </span>
                       )}
                     </p>
-                    <p className="text-sm text-end cursor-pointer hover:underline">
+                    <p
+                      onClick={handleResetPassword}
+                      className="text-sm text-end cursor-pointer hover:underline"
+                    >
                       Forgot Password?
                     </p>
                   </div>
@@ -108,6 +142,7 @@ const Login = () => {
             </div>
             <div className="my-6 space-y-4">
               <button
+                onClick={handleGoogleUser}
                 aria-label="Login with Google"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"
@@ -116,6 +151,7 @@ const Login = () => {
                 <p>Login with Google</p>
               </button>
               <button
+                onClick={handleFacebookUser}
                 aria-label="Login with Facebook"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"

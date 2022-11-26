@@ -1,19 +1,125 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import registerImg from "../../../Assets/register/register.json";
 import { useForm } from "react-hook-form";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../../Contexts/AuthContext";
 
 const SignUp = () => {
   const [displayPass, setDisplayPass] = useState(false);
+  const {createUser, updateUser, googleUser, facebookUser, signOutUser} = useContext(UserContext);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const handleSignUp = (data) => console.log(data);
+  const navigate = useNavigate();
+  // get JWT from backend and set token to localStorage
+  // const [emailForToken, setEmailForToken] = useState("");
+  // const [token] = useJWToken(emailForToken);
+  // if (token) {
+  //   signOutUser();
+  //   localStorage.removeItem('assign-token');
+  //   navigate("/login");
+  // }
+
+  const handleSignUp = (data, event) => {
+    const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+    fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData?.success) {
+          // creating an object with form data
+          const registeredUser = {
+            userName: data?.name,
+            email: data?.email,
+            role: data?.customer,
+            image: imgData?.data?.url,
+          };
+        // console.log(registeredUser)
+        createUser(data?.email, data?.password)
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+          updateUserProfile(data?.name, imgData?.data?.url, data?.email)
+          event.target.reset();
+        })
+        }
+      })
+  }
+
+  // update user profile
+  const updateUserProfile = (name, photo, email) => {
+    updateUser(name, photo)
+      .then(() => {
+        console.log(`${name} & Photo is added`);
+        // saveRegisteredUser(name, email);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }; 
+
+  // google register
+  const handleGoogleUser = () => {
+    googleUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        // saveRegisteredUser(user.displayName, user.email);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  // facebook register
+  const handleFacebookUser = () => {
+    facebookUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        // saveRegisteredUser(user.displayName, user.email);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+
+  // save registered user to database
+  // const saveRegisteredUser = (name, email) => {
+  //   const registeredUser = {
+  //     userName: name,
+  //     userEmail: email,
+  //     role: "user",
+  //   };
+  //   fetch("http://localhost:5000/users", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       authorization: `bearer ${localStorage.getItem("doctors-token")}`,
+  //     },
+  //     body: JSON.stringify(registeredUser),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.acknowledged) {
+  //         setEmailForToken(email);
+  //         toast.success("Successfully create an account!");
+  //       } else {
+  //         toast.error(data.message);
+  //         signOutUser();
+  //       }
+  //     });
+  // };
 
   return (
     <section className="dark:bg-gray-900 dark:text-gray-100">
@@ -169,6 +275,7 @@ const SignUp = () => {
             </div>
             <div className="my-6 space-y-4">
               <button
+              onClick={handleGoogleUser}
                 aria-label="SignUp with Google"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"
@@ -177,6 +284,7 @@ const SignUp = () => {
                 <p>SignUp with Google</p>
               </button>
               <button
+              onClick={handleFacebookUser}
                 aria-label="SignUp with Facebook"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"
