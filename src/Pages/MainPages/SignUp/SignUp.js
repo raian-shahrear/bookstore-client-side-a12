@@ -8,6 +8,7 @@ import { UserContext } from "../../../Contexts/AuthContext";
 
 const SignUp = () => {
   const [displayPass, setDisplayPass] = useState(false);
+  const [firebaseError, setFirebaseError] = useState('');
   const {createUser, updateUser, googleUser, facebookUser, signOutUser} = useContext(UserContext);
   const {
     register,
@@ -50,7 +51,12 @@ const SignUp = () => {
           console.log(user);
           updateUserProfile(data?.name, imgData?.data?.url, data?.email)
           event.target.reset();
+          setFirebaseError("");
         })
+        .catch((err) => {
+          console.error(err);
+          setFirebaseError(err.message);
+        });
         }
       })
   }
@@ -74,9 +80,11 @@ const SignUp = () => {
         const user = result.user;
         console.log(user);
         // saveRegisteredUser(user.displayName, user.email);
+        setFirebaseError("");
       })
       .catch((err) => {
         console.error(err);
+        setFirebaseError(err.message);
       });
   };
 
@@ -87,9 +95,11 @@ const SignUp = () => {
         const user = result.user;
         console.log(user);
         // saveRegisteredUser(user.displayName, user.email);
+        setFirebaseError("");
       })
       .catch((err) => {
         console.error(err);
+        setFirebaseError(err.message);
       });
   };
 
@@ -268,6 +278,9 @@ const SignUp = () => {
                 className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
               />
             </form>
+            {
+              firebaseError && <p className="text-error text-sm mt-2">{firebaseError}</p>
+            }
             <div className="flex items-center w-full my-6">
               <hr className="w-full text-gray-400" />
               <p className="px-3 text-gray-400">OR</p>

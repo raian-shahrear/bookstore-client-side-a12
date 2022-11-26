@@ -11,6 +11,7 @@ const Login = () => {
   const { signInUser, resetPassword, googleUser, facebookUser } =
     useContext(UserContext);
   const [displayPass, setDisplayPass] = useState(false);
+  const [firebaseError, setFirebaseError] = useState('');
   const {
     register,
     handleSubmit,
@@ -36,9 +37,11 @@ const Login = () => {
         toast.success("Successfully login!");
         // setEmailForToken(email);
         event.target.reset();
+        setFirebaseError('')
       })
       .catch((err) => {
         console.error(err);
+        setFirebaseError(err.message);
       });
   };
 
@@ -64,9 +67,11 @@ const Login = () => {
         console.log(user);
         toast.success("Successfully login through Google!");
         // setEmailForToken(user.email);
+        setFirebaseError("");
       })
       .catch((err) => {
         console.error(err);
+        setFirebaseError(err.message);
       });
   };
 
@@ -78,9 +83,11 @@ const Login = () => {
         console.log(user);
         toast.success("Successfully login through Facebook!");
         // setEmailForToken(user.email);
+        setFirebaseError("");
       })
       .catch((err) => {
         console.error(err);
+        setFirebaseError(err.message);
       });
   };
 
@@ -170,9 +177,12 @@ const Login = () => {
               <input
                 type="submit"
                 value="Login"
-                className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
+                className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 cursor-pointer dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
               />
             </form>
+            {
+              firebaseError && <p className="text-error text-sm mt-2">{firebaseError}</p>
+            }
             <div className="flex items-center w-full my-6">
               <hr className="w-full text-gray-400" />
               <p className="px-3 text-gray-400">OR</p>
