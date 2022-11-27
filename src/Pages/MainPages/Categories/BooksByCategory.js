@@ -14,7 +14,6 @@ const BooksByCategory = () => {
         `${process.env.REACT_APP_HOST_LINK}/books?id=${category?._id}`
       );
       const data = await res.json();
-      console.log(data);
       return data;
     },
   });

@@ -7,6 +7,7 @@ import BooksByCategory from "../Pages/MainPages/Categories/BooksByCategory";
 import AddAProduct from "../Pages/MainPages/Dashboard/AddAProduct";
 import Dashboard from "../Pages/MainPages/Dashboard/Dashboard";
 import MyOrders from "../Pages/MainPages/Dashboard/MyOrders";
+import MyProducts from "../Pages/MainPages/Dashboard/MyProducts";
 import Home from "../Pages/MainPages/Home/Home";
 import Login from "../Pages/MainPages/Login/Login";
 import SignUp from "../Pages/MainPages/SignUp/SignUp";
@@ -65,6 +66,10 @@ const routers = createBrowserRouter([
       {
         path: '/dashboard/add-a-product',
         element: <PrivateRoute><AddAProduct /></PrivateRoute>
+      },
+      {
+        path: '/dashboard/my-product',
+        element: <PrivateRoute><MyProducts /></PrivateRoute>
       },
     ]
   }

@@ -5,8 +5,11 @@ import { UserContext } from "../../../Contexts/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
+import {useNavigate} from 'react-router-dom';
+
 
 const AddAProduct = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -56,6 +59,7 @@ const AddAProduct = () => {
           const newProduct = {
             sellerName,
             sellerPhone,
+            sellerEmail: user?.email,
             sellerLocation,
             bookName,
             writerName,
@@ -84,7 +88,8 @@ const AddAProduct = () => {
               if (bookData.acknowledged) {
                 toast.success("Book added successfully!");
                 form.reset();
-                setUploading(false)
+                setUploading(false);
+                navigate('/dashboard/my-product');
               }
             })
             .catch((err) => console.error(err));

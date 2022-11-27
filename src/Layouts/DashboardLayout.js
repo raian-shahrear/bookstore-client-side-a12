@@ -14,7 +14,7 @@ const DashboardLayout = () => {
             type="checkbox"
             className="drawer-toggle"
           />
-          <div className="drawer-content px-24 lg:px-0">
+          <div className="drawer-content">
             <Outlet />
           </div>
           
@@ -52,14 +52,53 @@ const DashboardLayout = () => {
               </li>
               <li>
                 <NavLink
-                  to="/all-categories"
+                  to="/dashboard/my-product"
                   className={({ isActive }) =>
                     isActive
                       ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
                       : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
                   }
                 >
-                  <span>All Categories</span>
+                  <span>My Products</span>
+                  <FaAngleRight />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/all-buyers"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                  }
+                >
+                  <span>All Buyers</span>
+                  <FaAngleRight />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/all-sellers"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                  }
+                >
+                  <span>All Sellers</span>
+                  <FaAngleRight />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/reported-products"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                  }
+                >
+                  <span>Reported Products</span>
                   <FaAngleRight />
                 </NavLink>
               </li>
