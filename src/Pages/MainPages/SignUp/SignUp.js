@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Contexts/AuthContext";
+import { toast } from "react-toastify";
+
 
 const SignUp = () => {
   const [displayPass, setDisplayPass] = useState(false);

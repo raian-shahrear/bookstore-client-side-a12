@@ -35,7 +35,7 @@ const NavBar = () => {
   //   setTheme(theme === "dark" ? "light" : "dark");
   // }
 
-  // signout user
+  // sign out user
   const handleSignOut = () => {
     signOutUser().then(() => {
       toast.warning("Sign Out successfully");
@@ -63,19 +63,6 @@ const NavBar = () => {
       <li>
         <NavLink
           onClick={() => setIsMenuOpen(false)}
-          to="/all-categories"
-          className={({ isActive }) =>
-            isActive
-              ? "font-bold tracking-wide text-primary dark:text-info"
-              : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-          }
-        >
-          All Categories
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          onClick={() => setIsMenuOpen(false)}
           to="/blog"
           className={({ isActive }) =>
             isActive
@@ -88,6 +75,19 @@ const NavBar = () => {
       </li>
       {user?.uid && (
         <>
+          <li>
+            <NavLink
+              onClick={() => setIsMenuOpen(false)}
+              to="/all-categories"
+              className={({ isActive }) =>
+                isActive
+                  ? "font-bold tracking-wide text-primary dark:text-info"
+                  : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+              }
+            >
+              All Categories
+            </NavLink>
+          </li>
           <li>
             <NavLink
               onClick={() => setIsMenuOpen(false)}
@@ -319,12 +319,12 @@ const NavBar = () => {
             )}
           </div>
           <label
-              htmlFor="dashboard-drawer"
-              title="dashboard-menu"
-              className="drawer-button text-2xl lg:hidden p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent cursor-pointer text-gray-600 dark:text-base-100"
-            >
-              <RiMenuUnfoldFill />
-            </label>
+            htmlFor="dashboard-drawer"
+            title="dashboard-menu"
+            className="drawer-button text-2xl lg:hidden p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent cursor-pointer text-gray-600 dark:text-base-100"
+          >
+            <RiMenuUnfoldFill />
+          </label>
         </div>
       </div>
     </div>

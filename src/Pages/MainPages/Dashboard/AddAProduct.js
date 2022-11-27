@@ -1,18 +1,25 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ButtonPrimary from "../../../Components/Button/ButtonPrimary";
+import { UserContext } from "../../../Contexts/AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
 
 const AddAProduct = () => {
+  const { user } = useContext(UserContext);
+  const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState([]);
-  useEffect( () => {
-    fetch(`${process.env.REACT_APP_HOST_LINK}/categories`)
-    .then(res => res.json())
-    .then(data => setCategories(data))
-  }, [])
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_HOST_LINK}/categories`)
+      .then((data) => setCategories(data.data))
+      .catch((err) => console.error(err));
+  }, []);
 
   const date = new Date();
   const dateOfPost = format(date, "PP");
+  const postInMilliseconds = format(date, "T");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,7 +29,11 @@ const AddAProduct = () => {
     const sellerLocation = form.location.value;
     const bookName = form.bookName.value;
     const writerName = form.writerName.value;
-    const bookCategory = form.category.value;
+
+    const category = form.category.value;
+    const bookCategory = category.split("-")[0];
+    const categoryId = category.split("-")[1];
+
     const bookCover = form.bookPhoto.files[0];
     const bookCondition = form.condition.value;
     const dateOfPurchase = form.datePurchase.value;
@@ -34,46 +45,54 @@ const AddAProduct = () => {
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
     const formData = new FormData();
     formData.append("image", bookCover);
+    setUploading(true);
     fetch(`https://api.imgbb.com/1/upload?key=${imageHostKey}`, {
       method: "POST",
       body: formData,
     })
-    .then(res => res.json())
-    .then(imgData => {
-      if(imgData?.success){
-        const newProduct = {
-          sellerName,
-          sellerPhone,
-          sellerLocation,
-          bookName,
-          writerName,
-          bookCategory,
-          bookCoverPhoto: imgData?.data?.url,
-          bookCondition,
-          dateOfPurchase,
-          monthOfUse,
-          dateOfPost,
-          originalPrice,
-          resalePrice,
-          description,
-        };
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData?.success) {
+          const newProduct = {
+            sellerName,
+            sellerPhone,
+            sellerLocation,
+            bookName,
+            writerName,
+            bookCategory,
+            categoryId,
+            bookCoverPhoto: imgData?.data?.url,
+            bookCondition,
+            dateOfPurchase,
+            monthOfUse,
+            dateOfPost,
+            postInMs: postInMilliseconds,
+            originalPrice,
+            resalePrice,
+            description,
+          };
 
-        fetch(`${process.env.REACT_APP_HOST_LINK}/books`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newProduct),
-        })
-        .then(res => res.json())
-        .then(bookData => {
-          console.log(bookData)
-        })
-        .catch((err) => console.error(err));
-      }
-    })
-    .catch((err) => console.error(err));
+          fetch(`${process.env.REACT_APP_HOST_LINK}/books`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newProduct),
+          })
+            .then((res) => res.json())
+            .then((bookData) => {
+              if (bookData.acknowledged) {
+                toast.success("Book added successfully!");
+                form.reset();
+                setUploading(false)
+              }
+            })
+            .catch((err) => console.error(err));
+        }
+      })
+      .catch((err) => console.error(err));
   };
+
   return (
     <section>
       <div className="lg:w-1/2 mx-auto">
@@ -96,6 +115,8 @@ const AddAProduct = () => {
                   id="name"
                   type="text"
                   name="name"
+                  defaultValue={user?.displayName}
+                  readOnly
                   required
                   placeholder="your full name"
                   className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
@@ -166,7 +187,7 @@ const AddAProduct = () => {
                   className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
                 >
                   {categories?.map((category) => (
-                    <option key={category?._id} value={category?.categoryName}>
+                    <option key={category?._id} value={`${category?.categoryName}-${category._id}`}>
                       {category?.categoryName}
                     </option>
                   ))}
@@ -268,7 +289,10 @@ const AddAProduct = () => {
                 className="w-full h-28 px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
               />
             </div>
-            <ButtonPrimary type={`submit`}>Add Product</ButtonPrimary>
+            <ButtonPrimary type={`submit`}>
+            {uploading && <SmallSpinner />} Add Product
+            </ButtonPrimary>
+            
           </fieldset>
         </form>
       </div>

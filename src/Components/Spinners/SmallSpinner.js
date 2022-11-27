@@ -2,18 +2,18 @@ import React from "react";
 
 import { Oval } from "react-loader-spinner";
 
-const DefaultSpinner = () => {
+const SmallSpinner = () => {
   return (
-    <div className="">
+    <div className="mr-4">
       <Oval
-        height={80}
-        width={80}
-        color="#0B61A3"
+        height={30}
+        width={30}
+        color="#FFFFFF"
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
         ariaLabel="oval-loading"
-        secondaryColor="#001F43"
+        secondaryColor="#9ca3af"
         strokeWidth={2}
         strokeWidthSecondary={2}
       />
@@ -21,4 +21,4 @@ const DefaultSpinner = () => {
   );
 };
 
-export default DefaultSpinner;
+export default SmallSpinner;
