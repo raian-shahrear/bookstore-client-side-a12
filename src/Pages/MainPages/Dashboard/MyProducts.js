@@ -1,12 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../../Contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
+import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
+import { toast } from "react-toastify";
 
 const MyProducts = () => {
   const { user } = useContext(UserContext);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
-  const { data: books, isLoading } = useQuery({
+  // close delete modal
+  const closeModal = () => {
+    setConfirmDelete(null);
+  };
+
+  // get books by email
+  const {
+    data: books,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["books", user?.email],
     queryFn: async () => {
       const res = await fetch(
@@ -16,6 +29,23 @@ const MyProducts = () => {
       return data;
     },
   });
+
+  // delete book by id
+  const handleBookDelete = (eachBook) => {
+    fetch(`${process.env.REACT_APP_HOST_LINK}/books/${eachBook?._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((deletedData) => {
+        if (deletedData.acknowledged) {
+          toast.success(
+            `Your book, ${eachBook?.bookName} has been removed successfully`
+          );
+          refetch();
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
   if (isLoading) {
     return <PrimarySpinner />;
@@ -39,7 +69,7 @@ const MyProducts = () => {
                     <th scope="col" className="py-3 px-2 w-40">
                       Book's Name
                     </th>
-                    <th scope="col" className="py-3 px-2 w-40">
+                    <th scope="col" className="py-3 px-2 w-40 hidden lg:block">
                       Book's Category
                     </th>
                     <th scope="col" className="py-3 px-2 w-36">
@@ -70,16 +100,35 @@ const MyProducts = () => {
                         </div>
                       </th>
                       <td className="p-2">{book?.bookName}</td>
-                      <td className="p-2">{book?.bookCategory}</td>
+                      <td className="p-2 hidden lg:block">
+                        {book?.bookCategory}
+                      </td>
                       <td className="p-2">{book?.resalePrice}</td>
                       <td className="p-2">
-                        <div className="badge badge-outline border-">
+                        <div
+                          className={`badge badge-outline ${
+                            book?.sellStatus
+                              ? "border-success text-success"
+                              : "border-accent text-accent dark:border-base-100 dark:text-base-100"
+                          }`}
+                        >
                           {book?.sellStatus ? "Sold" : "available"}
                         </div>
                       </td>
                       <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-                        <button className="btn btn-info btn-xs lg:btn-sm">Advertise</button>
-                        <button className="btn btn-error btn-xs lg:btn-sm">Delete</button>
+                        <button
+                          className="btn btn-info btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-primary hover:border-transparent disabled:bg-gray-200 disabled:text-gray-500"
+                          disabled={book?.sellStatus && true}
+                        >
+                          Advertise
+                        </button>
+                        <label
+                          onClick={() => setConfirmDelete(book)}
+                          htmlFor="confirmation-modal"
+                          className="btn btn-error btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-red-700 hover:border-transparent"
+                        >
+                          Delete
+                        </label>
                       </td>
                     </tr>
                   ))}
@@ -88,6 +137,15 @@ const MyProducts = () => {
             </div>
           </div>
         </div>
+      )}
+      {confirmDelete && (
+        <ConfirmationModal
+          title={`Are you want to delete "${confirmDelete?.bookName}"?`}
+          message={`If you will remove the book, it can't be Undo!`}
+          closeModal={closeModal}
+          successData={confirmDelete}
+          successAction={handleBookDelete}
+        />
       )}
     </section>
   );

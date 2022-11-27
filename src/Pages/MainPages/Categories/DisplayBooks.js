@@ -2,7 +2,7 @@ import React from "react";
 import { FaRegClock, FaCheckCircle } from "react-icons/fa";
 
 const DisplayBooks = ({ book }) => {
-  const {_id, bookCoverPhoto, bookName, writerName, originalPrice, resalePrice, bookCondition, sellerName, sellerLocation, dateOfPost, monthOfUse} = book
+  const {bookCoverPhoto, bookName, writerName, originalPrice, resalePrice, bookCondition, sellerName, sellerLocation, dateOfPost, monthOfUse} = book
   return (
     <div>
       <div className="card w-full h-full bg-gray-100 dark:bg-gray-800 shadow-md">

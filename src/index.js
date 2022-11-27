@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
+const darkTheme = localStorage.getItem("dark-icon");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,7 +27,7 @@ root.render(
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
+          theme={"light"}
         />
       </AuthContext>
     </QueryClientProvider>
