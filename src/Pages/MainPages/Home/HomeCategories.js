@@ -5,10 +5,14 @@ import axios from "axios";
 
 const HomeCategories = () => {
   const [categories, setCategories] = useState([]);
+  
   axios
     .get(`${process.env.REACT_APP_HOST_LINK}/categories`)
-    .then((data) => setCategories(data.data))
+    .then((data) => {
+      setCategories(data.data);
+    })
     .catch((err) => console.error(err));
+
 
   return (
     <div className="flex flex-wrap justify-between gap-6">

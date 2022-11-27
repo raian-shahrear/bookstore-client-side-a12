@@ -26,11 +26,37 @@ const DashboardLayout = () => {
             <ul className="pt-10 lg:pt-0 menu w-80 bg-gray-100 dark:bg-gray-800 lg:bg-transparent dark:lg:bg-transparent text-base-content ">
               <li>
                 <NavLink
+                  to="/dashboard/my-orders"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                  }
+                >
+                  <span>My Orders</span>
+                  <FaAngleRight />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/add-a-product"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                  }
+                >
+                  <span>Add A Product</span>
+                  <FaAngleRight />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="/all-categories"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "flex items-center gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
                   }
                 >
                   <span>All Categories</span>
