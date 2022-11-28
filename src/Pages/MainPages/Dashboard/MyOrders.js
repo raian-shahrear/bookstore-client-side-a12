@@ -3,6 +3,8 @@ import { UserContext } from "../../../Contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
+import { toast } from "react-toastify";
+
 
 const MyOrders = () => {
   const { user } = useContext(UserContext);
@@ -30,7 +32,19 @@ const MyOrders = () => {
   });
 
   const handleBookDelete = (eachOrder) => {
-    console.log(eachOrder);
+    fetch(`${process.env.REACT_APP_HOST_LINK}/orders/${eachOrder?._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((deletedData) => {
+        if (deletedData.acknowledged) {
+          toast.success(
+            `Your order has been removed successfully`
+          );
+          refetch();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   if (isLoading) {
@@ -56,10 +70,13 @@ const MyOrders = () => {
                   <th scope="col" className="py-3 px-2 w-20">
                     Ordered Date
                   </th>
-                  <th scope="col" className="py-3 px-2 w-32">
+                  <th scope="col" className="py-3 px-2 w-28">
                     Your Name
                   </th>
-                  <th scope="col" className="py-3 px-2 w-40">
+                  <th scope="col" className="py-3 px-2 w-28">
+                    Your Email
+                  </th>
+                  <th scope="col" className="py-3 px-2 w-32">
                     Book Ordered
                   </th>
                   <th scope="col" className="py-3 px-2 text-center w-1/4">
@@ -80,6 +97,7 @@ const MyOrders = () => {
                       {book?.orderDate}
                     </th>
                     <td className="p-2">{book?.buyerName}</td>
+                    <td className="p-2">{book?.buyerEmail}</td>
                     <td className="p-2">{book?.bookName}</td>
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                       {book?.bookPrice && !book?.isPaid ? (
