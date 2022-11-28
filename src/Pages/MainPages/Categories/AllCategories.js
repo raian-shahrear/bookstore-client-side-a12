@@ -13,7 +13,6 @@ const AllCategories = () => {
         `${process.env.REACT_APP_HOST_LINK}/books`
       );
       const data = await res.json();
-      console.log(data);
       return data;
     },
   });

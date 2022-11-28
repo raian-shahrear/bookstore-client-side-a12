@@ -114,7 +114,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="name" className="font-medium">
-                  Your name
+                  Your name *
                 </label>
                 <input
                   id="name"
@@ -129,7 +129,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="phone" className="font-medium">
-                  Your contact number
+                  Your contact number *
                 </label>
                 <input
                   id="phone"
@@ -142,7 +142,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="location" className="font-medium">
-                  Your location
+                  Your location *
                 </label>
                 <input
                   id="location"
@@ -155,7 +155,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="book-name" className="font-medium">
-                  Book's name
+                  Book's name *
                 </label>
                 <input
                   id="book-name"
@@ -170,7 +170,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="writer-name" className="font-medium">
-                  Book's writer name
+                  Book's writer name *
                 </label>
                 <input
                   id="writer-name"
@@ -183,7 +183,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="category" className="font-medium">
-                  Book's category
+                  Book's category *
                 </label>
                 <select
                   id="category"
@@ -200,7 +200,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="book-photo" className="font-medium">
-                  Book's cover photo
+                  Book's cover photo *
                 </label>
                 <input
                   id="book-photo"
@@ -212,7 +212,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="condition" className="font-medium">
-                  Set book's condition
+                  Set book's condition *
                 </label>
                 <select
                   id="condition"
@@ -229,7 +229,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="date-purchase" className="font-medium">
-                  Date of purchase
+                  Date of purchase *
                 </label>
                 <input
                   id="date-purchase"
@@ -241,7 +241,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="month-use" className="font-medium">
-                  Month of use
+                  Month of use *
                 </label>
                 <input
                   id="month-use"
@@ -254,7 +254,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="original-price" className="font-medium">
-                  Original Price
+                  Original Price *
                 </label>
                 <input
                   id="original-price"
@@ -268,7 +268,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="resale-price" className="font-medium">
-                  Resale price
+                  Resale price *
                 </label>
                 <input
                   id="resale-price"
@@ -283,7 +283,7 @@ const AddAProduct = () => {
             </div>
             <div className="col-span-full">
               <label htmlFor="description" className="font-medium">
-                Description
+                Description *
               </label>
               <textarea
                 id="description"
@@ -297,7 +297,6 @@ const AddAProduct = () => {
             <ButtonPrimary type={`submit`}>
             {uploading && <SmallSpinner />} Add Product
             </ButtonPrimary>
-            
           </fieldset>
         </form>
       </div>
