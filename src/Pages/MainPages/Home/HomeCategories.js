@@ -14,7 +14,7 @@ const HomeCategories = () => {
   }, [])
 
   const handleNavigation = (category) => { 
-    navigate(`/books/${category._id}`, {state: category });
+    navigate(`/books/${category._id}`, { state: category });
   }
 
   return (

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from '../../../Components/Spinners/PrimarySpinner';
 import DisplayBooks from './DisplayBooks';
 
+
 const AllCategories = () => {
 
   const { data: books, isLoading } = useQuery({
@@ -16,7 +17,7 @@ const AllCategories = () => {
       return data;
     },
   });
-
+  
   if (isLoading) {
     return <PrimarySpinner />;
   }

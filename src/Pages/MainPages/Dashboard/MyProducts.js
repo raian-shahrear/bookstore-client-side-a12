@@ -65,7 +65,7 @@ const MyProducts = () => {
       .then((updateData) => {
         if (updateData.acknowledged) {
           toast.success(
-            `Your book, ${updateBook?.bookName} has been advertised successfully! Please check the Advertisement section of Home page to see the update.`
+            `Your book, "${singleBook?.bookName}" has been advertised successfully! Please check the Advertisement section of Home page to see the update.`
           );
           refetch();
         }
@@ -80,7 +80,7 @@ const MyProducts = () => {
     <section className="bg-base-100 dark:bg-gray-900">
       <div className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl">
         <div className="lg:w-1/2 mx-auto">
-          <h2 className="text-4xl font-bold text-accent dark:text-info text-center lg:mt-10 mb-10 pb-3 border-b">
+          <h2 className="text-4xl font-bold text-accent dark:text-info text-center lg:mt-10 mb-10 pb-3 border-b dark:border-gray-700">
             My Products
           </h2>
         </div>

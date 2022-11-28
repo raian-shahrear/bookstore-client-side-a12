@@ -101,7 +101,7 @@ const AddAProduct = () => {
   return (
     <section>
       <div className="lg:w-1/2 mx-auto">
-        <h2 className="text-4xl font-bold text-accent dark:text-info text-center lg:mt-10 mb-10 pb-3 border-b">
+        <h2 className="text-4xl font-bold text-accent dark:text-info text-center lg:mt-10 mb-10 pb-3 border-b dark:border-gray-700">
           Add Your Book
         </h2>
       </div>

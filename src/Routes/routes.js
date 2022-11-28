@@ -3,6 +3,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Root from "../Layouts/Root";
 import Blog from "../Pages/Blog/Blog";
 import AllCategories from "../Pages/MainPages/Categories/AllCategories";
+import BookDetails from "../Pages/MainPages/Categories/BookDetails";
 import BooksByCategory from "../Pages/MainPages/Categories/BooksByCategory";
 import AddAProduct from "../Pages/MainPages/Dashboard/AddAProduct";
 import Dashboard from "../Pages/MainPages/Dashboard/Dashboard";
@@ -33,8 +34,12 @@ const routers = createBrowserRouter([
         element: <PrivateRoute><AllCategories /></PrivateRoute>
       },
       {
-        path: '/books/:name',
+        path: '/books/:id',
         element: <PrivateRoute><BooksByCategory /></PrivateRoute>
+      },
+      {
+        path: '/books-details/:id',
+        element: <PrivateRoute><BookDetails /></PrivateRoute>
       },
       {
         path: '/blog',
