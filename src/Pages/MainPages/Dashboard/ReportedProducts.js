@@ -20,7 +20,12 @@ const ReportedProducts = () => {
   } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
-      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported`);
+      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("access-token")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -29,6 +34,10 @@ const ReportedProducts = () => {
   const handleBookDelete = (eachBook) => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported/${eachBook?._id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
     })
       .then((res) => res.json())
       .then((deletedData) => {

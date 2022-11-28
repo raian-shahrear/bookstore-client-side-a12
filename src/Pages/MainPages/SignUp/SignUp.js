@@ -6,6 +6,7 @@ import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
+import useJWToken from "../../../Hooks/useJWToken";
 
 
 const SignUp = () => {
@@ -20,13 +21,13 @@ const SignUp = () => {
   } = useForm();
   const navigate = useNavigate();
   // get JWT from backend and set token to localStorage
-  // const [emailForToken, setEmailForToken] = useState("");
-  // const [token] = useJWToken(emailForToken);
-  // if (token) {
-  //   signOutUser();
-  //   localStorage.removeItem('assign-token');
-  //   navigate("/login");
-  // }
+  const [emailForToken, setEmailForToken] = useState("");
+  const [token] = useJWToken(emailForToken);
+  if (token) {
+    signOutUser();
+    localStorage.removeItem('access-token');
+    navigate("/login");
+  }
 
   const handleSignUp = (data, event) => {
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
@@ -42,16 +43,15 @@ const SignUp = () => {
           // creating an object with form data
           const registeredUser = {
             userName: data?.name,
-            email: data?.email,
-            role: data?.customer,
-            image: imgData?.data?.url,
+            userEmail: data?.email,
+            role: data?.customer
           };
         // console.log(registeredUser)
         createUser(data?.email, data?.password)
         .then(result => {
           const user = result.user;
           console.log(user);
-          updateUserProfile(data?.name, imgData?.data?.url, data?.email)
+          updateUserProfile(data?.name, imgData?.data?.url, registeredUser)
           event.target.reset();
           setFirebaseError("");
         })
@@ -64,11 +64,11 @@ const SignUp = () => {
   }
 
   // update user profile
-  const updateUserProfile = (name, photo, email) => {
+  const updateUserProfile = (name, photo, registeredUser) => {
     updateUser(name, photo)
       .then(() => {
         console.log(`${name} & Photo is added`);
-        // saveRegisteredUser(name, email);
+        saveRegisteredUser(registeredUser);
       })
       .catch((err) => {
         console.error(err);
@@ -81,7 +81,12 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        // saveRegisteredUser(user.displayName, user.email);
+        const registeredUser = {
+          userName: user?.displayName,
+          userEmail: user?.email,
+          role: "user"
+        };
+        saveRegisteredUser(registeredUser);
         setFirebaseError("");
       })
       .catch((err) => {
@@ -96,7 +101,12 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        // saveRegisteredUser(user.displayName, user.email);
+        const registeredUser = {
+          userName: user?.displayName,
+          userEmail: user?.email,
+          role: "user"
+        };
+        saveRegisteredUser(registeredUser);
         setFirebaseError("");
       })
       .catch((err) => {
@@ -107,31 +117,26 @@ const SignUp = () => {
 
 
   // save registered user to database
-  // const saveRegisteredUser = (name, email) => {
-  //   const registeredUser = {
-  //     userName: name,
-  //     userEmail: email,
-  //     role: "user",
-  //   };
-  //   fetch("http://localhost:5000/users", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       authorization: `bearer ${localStorage.getItem("doctors-token")}`,
-  //     },
-  //     body: JSON.stringify(registeredUser),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.acknowledged) {
-  //         setEmailForToken(email);
-  //         toast.success("Successfully create an account!");
-  //       } else {
-  //         toast.error(data.message);
-  //         signOutUser();
-  //       }
-  //     });
-  // };
+  const saveRegisteredUser = (registeredUser) => {
+    fetch(`${process.env.REACT_APP_HOST_LINK}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
+      body: JSON.stringify({registeredUser}),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          setEmailForToken(registeredUser?.userEmail);
+          toast.success("Successfully create an account!");
+        } else {
+          toast.error(data.message);
+          signOutUser();
+        }
+      });
+  };
 
   return (
     <section className="dark:bg-gray-900 dark:text-gray-100">
@@ -264,8 +269,8 @@ const SignUp = () => {
                     placeholder="******"
                     className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                   >
-                    <option value="user">User</option>
-                    <option value="seller">Seller</option>
+                    <option value="user">user</option>
+                    <option value="seller">seller</option>
                   </select>
                   {errors.customer && (
                     <span className="text-sm text-error">
@@ -277,7 +282,7 @@ const SignUp = () => {
               <input
                 type="submit"
                 value="Sign Up"
-                className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
+                className="w-full px-8 py-3 cursor-pointer font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
               />
             </form>
             {

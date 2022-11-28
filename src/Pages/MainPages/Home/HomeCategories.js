@@ -8,7 +8,12 @@ const HomeCategories = () => {
   const [categories, setCategories] = useState([]);
   useEffect( ()=>{
     axios
-    .get(`${process.env.REACT_APP_HOST_LINK}/categories`)
+    .get(`${process.env.REACT_APP_HOST_LINK}/categories`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
+    })
     .then((data) =>setCategories(data.data))
     .catch((err) => console.error(err));
   }, [])

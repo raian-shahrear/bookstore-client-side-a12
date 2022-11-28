@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import NavBar from "../Pages/SharedPages/NavBar";
 import { FaAngleRight } from "react-icons/fa";
+import { UserContext } from "../Contexts/AuthContext";
+import useAdmin from "../Hooks/useAdmin";
+import useSeller from "../Hooks/useSeller";
+import PrimarySpinner from "../Components/Spinners/PrimarySpinner";
 
 const DashboardLayout = () => {
+  const { user } = useContext(UserContext);
+  const [isAdmin, adminLoading] = useAdmin(user?.email);
+  const [isSeller, sellerLoading] = useSeller(user?.email);
+
+  if (adminLoading || sellerLoading) {
+    <PrimarySpinner />;
+  }
   return (
     <div>
       <NavBar />
@@ -17,7 +28,7 @@ const DashboardLayout = () => {
           <div className="drawer-content">
             <Outlet />
           </div>
-          
+
           <div className="lg:mt-10 drawer-side lg:border-r border-gray-200 dark:border-gray-500">
             <label
               htmlFor="dashboard-drawer"
@@ -37,71 +48,79 @@ const DashboardLayout = () => {
                   <FaAngleRight />
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/dashboard/add-a-product"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-                  }
-                >
-                  <span>Add A Product</span>
-                  <FaAngleRight />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/my-products"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-                  }
-                >
-                  <span>My Products</span>
-                  <FaAngleRight />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/all-buyers"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-                  }
-                >
-                  <span>All Buyers</span>
-                  <FaAngleRight />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/all-sellers"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-                  }
-                >
-                  <span>All Sellers</span>
-                  <FaAngleRight />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/dashboard/reported-products"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
-                      : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-                  }
-                >
-                  <span>Reported Products</span>
-                  <FaAngleRight />
-                </NavLink>
-              </li>
+              {isSeller && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/add-a-product"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                          : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      }
+                    >
+                      <span>Add A Product</span>
+                      <FaAngleRight />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/my-products"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                          : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      }
+                    >
+                      <span>My Products</span>
+                      <FaAngleRight />
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {isAdmin && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/all-buyers"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                          : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      }
+                    >
+                      <span>All Buyers</span>
+                      <FaAngleRight />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/all-sellers"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                          : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      }
+                    >
+                      <span>All Sellers</span>
+                      <FaAngleRight />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/reported-products"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"
+                          : "grid grid-cols-2 gap-5 font-bold tracking-wide text-gray-700 bg-transparent dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
+                      }
+                    >
+                      <span>Reported Products</span>
+                      <FaAngleRight />
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

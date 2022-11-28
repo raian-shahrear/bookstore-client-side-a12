@@ -41,7 +41,8 @@ const BookDetails = () => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported/${eachBook?._id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
       },
       body: JSON.stringify(reported),
     })
@@ -71,10 +72,10 @@ const BookDetails = () => {
                 <p className="text-2xl text-gray-900 dark:text-base-100">
                   Price:{" "}
                   <span className="font-bold text-primary dark:text-info">
-                    {resalePrice}
+                    ${resalePrice}
                   </span>{" "}
                   <span className="text-base line-through ml-1">
-                    {originalPrice}
+                    ${originalPrice}
                   </span>
                 </p>
               </div>

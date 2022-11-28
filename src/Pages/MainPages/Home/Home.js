@@ -12,10 +12,13 @@ const Home = () => {
     queryKey: ["books"],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books-isAdvertised`
+        `${process.env.REACT_APP_HOST_LINK}/books-isAdvertised`, {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("access-token")}`,
+          },
+        }
       );
       const data = await res.json();
-      console.log(data);
       return data;
     },
   });
@@ -32,7 +35,7 @@ const Home = () => {
       <section className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl py-20">
         <HomeCategories />
       </section>
-      {books.length > 0 && (
+      {books?.length > 0 && (
         <section className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl pb-20">
           <HomeAdvertisement books={books} />
         </section>

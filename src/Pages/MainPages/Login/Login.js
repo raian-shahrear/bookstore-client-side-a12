@@ -6,6 +6,7 @@ import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
+import useJWToken from "../../../Hooks/useJWToken";
 
 const Login = () => {
   const { signInUser, resetPassword, googleUser, facebookUser } =
@@ -22,11 +23,11 @@ const Login = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
   // get JWT from backend and set token to localStorage
-  // const [emailForToken, setEmailForToken] = useState("");
-  // const [token] = useJWToken(emailForToken);
-  // if (token) {
-  //   navigate(from, { replace: true });
-  // }
+  const [emailForToken, setEmailForToken] = useState("");
+  const [token] = useJWToken(emailForToken);
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const handleLogin = (data, event) => {
     const { email, password } = data;
@@ -35,7 +36,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Successfully login!");
-        // setEmailForToken(email);
+        setEmailForToken(email);
         event.target.reset();
         setFirebaseError('')
       })
@@ -66,7 +67,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Successfully login through Google!");
-        // setEmailForToken(user.email);
+        setEmailForToken(user.email);
         setFirebaseError("");
       })
       .catch((err) => {
@@ -82,7 +83,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         toast.success("Successfully login through Facebook!");
-        // setEmailForToken(user.email);
+        setEmailForToken(user.email);
         setFirebaseError("");
       })
       .catch((err) => {

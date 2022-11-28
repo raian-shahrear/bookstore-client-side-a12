@@ -14,7 +14,12 @@ const AllCategories = () => {
   } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
-      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books`);
+      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("access-token")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },

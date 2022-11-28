@@ -15,7 +15,12 @@ const AddAProduct = () => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_HOST_LINK}/categories`)
+      .get(`${process.env.REACT_APP_HOST_LINK}/categories`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("access-token")}`,
+        },
+      })
       .then((data) => setCategories(data.data))
       .catch((err) => console.error(err));
   }, []);
@@ -80,6 +85,7 @@ const AddAProduct = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              authorization: `bearer ${localStorage.getItem("access-token")}`,
             },
             body: JSON.stringify(newProduct),
           })
@@ -89,7 +95,7 @@ const AddAProduct = () => {
                 toast.success("Book added successfully!");
                 form.reset();
                 setUploading(false);
-                navigate('/dashboard/my-product');
+                navigate('/dashboard/my-products');
               }
             })
             .catch((err) => console.error(err));
@@ -258,9 +264,8 @@ const AddAProduct = () => {
                 </label>
                 <input
                   id="original-price"
-                  type="text"
+                  type="number"
                   name="originalPrice"
-                  defaultValue="$"
                   required
                   placeholder="product's original price"
                   className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
@@ -272,9 +277,8 @@ const AddAProduct = () => {
                 </label>
                 <input
                   id="resale-price"
-                  type="text"
+                  type="number"
                   name="resalePrice"
-                  defaultValue="$"
                   required
                   placeholder="product's resale price"
                   className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"

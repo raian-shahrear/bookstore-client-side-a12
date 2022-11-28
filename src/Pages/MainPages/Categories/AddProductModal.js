@@ -37,7 +37,8 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/orders`, {
       method: 'POST',
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
       },
       body: JSON.stringify(ordered),
     })

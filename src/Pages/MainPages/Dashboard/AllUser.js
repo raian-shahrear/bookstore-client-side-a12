@@ -1,13 +1,10 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "../../../Contexts/AuthContext";
+import React, { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
-import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
-import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
+import PrimarySpinner from '../../../Components/Spinners/PrimarySpinner';
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import ConfirmationModal from '../../../Components/Modal/ConfirmationModal';
 
-const MyOrders = () => {
-  const { user } = useContext(UserContext);
+const AllUser = () => {
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   // close delete modal
@@ -15,16 +12,16 @@ const MyOrders = () => {
     setConfirmDelete(null);
   };
 
-  // get books by email
+  
   const {
-    data: orders,
+    data: users,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["orders", user?.email],
+    queryKey: ["orders", "user"],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/orders/${user?.email}`, {
+        `${process.env.REACT_APP_HOST_LINK}/users?role=user`, {
           headers: {
             "Content-Type": "application/json",
             authorization: `bearer ${localStorage.getItem("access-token")}`,
@@ -36,9 +33,10 @@ const MyOrders = () => {
     },
   });
 
+
   // delete book by id
-  const handleBookDelete = (eachOrder) => {
-    fetch(`${process.env.REACT_APP_HOST_LINK}/orders/${eachOrder?._id}`, {
+  const handleUserDelete = (eachUser) => {
+    fetch(`${process.env.REACT_APP_HOST_LINK}/users/${eachUser?._id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +64,7 @@ const MyOrders = () => {
             My Orders
           </h2>
         </div>
-        {orders.length === 0 ? (
+        {users?.length === 0 ? (
           <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
             No Order is placed yet
           </h2>
@@ -76,16 +74,16 @@ const MyOrders = () => {
               <thead className="text-xs text-accent uppercase bg-gray-200 dark:text-gray-200 dark:bg-gray-800">
                 <tr>
                   <th scope="col" className="py-3 px-2 w-20">
-                    Ordered Date
+                    
                   </th>
                   <th scope="col" className="py-3 px-2 w-28">
-                    Your Name
+                    Buyer Name
                   </th>
                   <th scope="col" className="py-3 px-2 w-28">
-                    Your Email
+                    Buyer Email
                   </th>
                   <th scope="col" className="py-3 px-2 w-32">
-                    Book Ordered
+                    Role
                   </th>
                   <th scope="col" className="py-3 px-2 text-center w-1/4">
                     Action
@@ -93,37 +91,23 @@ const MyOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {users.map((user) => (
                   <tr
-                    key={order?._id}
+                    key={user?._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"
                   >
                     <th
                       scope="row"
                       className="py-2 px-3 font-medium text-gray-900 dark:text-gray-200 whitespace-nowrap"
                     >
-                      {order?.orderDate}
+                      {user?.userName}
                     </th>
-                    <td className="p-2">{order?.buyerName}</td>
-                    <td className="p-2">{order?.buyerEmail}</td>
-                    <td className="p-2">{order?.bookName}</td>
+                    <td className="p-2">{user?.userEmail}</td>
+                    <td className="p-2">{user?.buyerEmail}</td>
+                    <td className="p-2">{user?.role}</td>
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-                      {order?.bookPrice && !order?.paid ? (
-                        <Link to={`/dashboard/payment/${order?._id}`}>
-                          <button className="btn btn-info btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-primary hover:border-transparent w-full">
-                            Pay ${order?.bookPrice}
-                          </button>
-                        </Link>
-                      ) : (
-                        <div
-                          className="badge badge-outline 
-                              border-success text-success dark:border-base-100 dark:text-base-100"
-                        >
-                          Paid
-                        </div>
-                      )}
                       <label
-                        onClick={() => setConfirmDelete(order)}
+                        onClick={() => setConfirmDelete(user)}
                         htmlFor="confirmation-modal"
                         className="btn btn-error btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-red-700 hover:border-transparent w-full"
                       >
@@ -140,11 +124,11 @@ const MyOrders = () => {
 
       {confirmDelete && (
         <ConfirmationModal
-          title={`Are you want to delete "${confirmDelete?.bookName}"?`}
-          message={`If you will remove the book, it can't be Undo!`}
+          title={`Are you want to delete "${confirmDelete?.userName}"?`}
+          message={`If you will anyone, it can't be Undo!`}
           closeModal={closeModal}
           successData={confirmDelete}
-          successAction={handleBookDelete}
+          successAction={handleUserDelete}
           successClass={`btn btn-sm bg-red-500 text-base-100 transition-all duration-300 hover:bg-red-700 border-transparent hover:border-transparent mr-6`}
         />
       )}
@@ -152,4 +136,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default AllUser;

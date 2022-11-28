@@ -25,7 +25,12 @@ const MyProducts = () => {
     queryKey: ["books", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books/${user?.email}`
+        `${process.env.REACT_APP_HOST_LINK}/books/${user?.email}`, {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `bearer ${localStorage.getItem("access-token")}`,
+          },
+        }
       );
       const data = await res.json();
       return data;
@@ -132,7 +137,7 @@ const MyProducts = () => {
                     <td className="p-2 hidden lg:block">
                       {book?.bookCategory}
                     </td>
-                    <td className="p-2">{book?.resalePrice}</td>
+                    <td className="p-2">${book?.resalePrice}</td>
                     <td className="p-2">
                       <div
                         className={`badge badge-outline ${
