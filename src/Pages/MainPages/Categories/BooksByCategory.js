@@ -43,6 +43,7 @@ const BooksByCategory = () => {
                 key={book?._id}
                 book={book}
                 setAddBook={setAddBook}
+                refetch={refetch}
               />
             ))}
           </div>

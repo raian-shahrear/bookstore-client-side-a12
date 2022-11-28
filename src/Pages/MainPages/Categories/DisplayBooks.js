@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegClock, FaCheckCircle } from "react-icons/fa";
 import { MdOutlineMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
+import { toast } from "react-toastify";
 
-const DisplayBooks = ({ book, setAddBook }) => {
+
+const DisplayBooks = ({ book, setAddBook, refetch }) => {
+  const [confirmReport, setConfirmReport] = useState(null);
+
+  // close delete modal
+  const closeModal = () => {
+    setConfirmReport(null);
+  };
+
   const {
     bookCoverPhoto,
     bookName,
@@ -21,6 +31,29 @@ const DisplayBooks = ({ book, setAddBook }) => {
   const handleDetails = (singleBook) => {
     navigate(`/books-details/${singleBook._id}`, { state: singleBook });
   };
+
+  const handleReportProduct = (eachBook) => {
+    const reported = {
+      isReported: true
+    }
+    fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported/${eachBook?._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reported),
+    })
+    .then(res => res.json())
+    .then(reportData => {
+      if(reportData.acknowledged){
+        toast.success(`Your report for "${eachBook?.bookName}", has been accepted `);
+        refetch()
+        navigate('/')
+      }
+      
+    })
+    .catch(err => console.error(err))
+  }
 
   return (
     <div>
@@ -71,12 +104,26 @@ const DisplayBooks = ({ book, setAddBook }) => {
             >
               Add to order
             </label>
-            <button className="btn btn-sm btn-secondary text-base-100">
+            <label
+              onClick={() => setConfirmReport(book)}
+              htmlFor="confirmation-modal"
+              className="btn btn-sm btn-secondary text-base-100"
+            >
               Report to admin
-            </button>
+            </label>
           </div>
         </div>
       </div>
+      {confirmReport && (
+        <ConfirmationModal
+          title={`Are you want to Report for "${confirmReport?.bookName}"?`}
+          message={`If you will report the book, it can't be Undo!`}
+          closeModal={closeModal}
+          successData={confirmReport}
+          successAction={handleReportProduct}
+          successClass={`btn btn-sm btn-secondary text-base-100`}
+        />
+      )}
     </div>
   );
 };

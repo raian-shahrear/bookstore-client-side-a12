@@ -39,6 +39,7 @@ const AllCategories = () => {
                 key={book?._id}
                 book={book}
                 setAddBook={setAddBook}
+                refetch={refetch}
               />
             ))}
           </div>

@@ -54,7 +54,7 @@ const MyProducts = () => {
     const updateBook = {
       isAdvertised: true,
     };
-    fetch(`${process.env.REACT_APP_HOST_LINK}/books/${singleBook?._id}`, {
+    fetch(`${process.env.REACT_APP_HOST_LINK}/books-isAdvertised/${singleBook?._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,8 @@ const MyProducts = () => {
           );
           refetch();
         }
-      });
+      })
+      .catch(err => console.error(err))
   };
 
   if (isLoading) {

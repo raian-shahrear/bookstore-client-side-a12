@@ -52,7 +52,7 @@ const DashboardLayout = () => {
               </li>
               <li>
                 <NavLink
-                  to="/dashboard/my-product"
+                  to="/dashboard/my-products"
                   className={({ isActive }) =>
                     isActive
                       ? "grid grid-cols-2 gap-5 font-bold tracking-wide text-primary dark:text-info bg-transparent"

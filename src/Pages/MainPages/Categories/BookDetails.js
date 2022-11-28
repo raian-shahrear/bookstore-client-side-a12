@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import AddProductModal from "./AddProductModal";
+import { toast } from "react-toastify";
+
 
 const BookDetails = () => {
   const { state: singleBook } = useLocation();
   const [addBook, setAddBook] = useState(null);
+  const [confirmReport, setConfirmReport] = useState(null);
+  const navigate = useNavigate();
+
+  const closeModal = () => {
+    setConfirmReport(null);
+  }
 
   const {
     _id,
@@ -23,6 +32,29 @@ const BookDetails = () => {
     monthOfUse,
     description,
   } = singleBook;
+
+
+  const handleReportProduct = (eachBook) => {
+    const reported = {
+      isReported: true
+    }
+    fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported/${eachBook?._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reported),
+    })
+    .then(res => res.json())
+    .then(reportData => {
+      if(reportData.acknowledged){
+        toast.success(`Your report for "${eachBook?.bookName}", has been accepted `);
+        navigate('/');
+      }
+      
+    })
+    .catch(err => console.error(err))
+  }
   return (
     <div>
       <div className="overflow-hidden bg-base-100 dark:bg-gray-900 py-10">
@@ -86,9 +118,13 @@ const BookDetails = () => {
                 >
                   Add to order
                 </label>
-                <button className="btn btn-sm btn-secondary text-base-100">
+                <label
+                  onClick={() => setConfirmReport(singleBook)}
+                  htmlFor="confirmation-modal"
+                  className="btn btn-sm btn-secondary text-base-100"
+                >
                   Report to admin
-                </button>
+                </label>
               </div>
             </div>
             <div className="w-full lg::px-8 sm:w-8/12 lg:w-6/12">
@@ -101,10 +137,15 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
-      {addBook && (
-        <AddProductModal
-          book={addBook}
-          setAddBook={setAddBook}
+      {addBook && <AddProductModal book={addBook} setAddBook={setAddBook} />}
+      {confirmReport && (
+        <ConfirmationModal
+          title={`Are you want to Report for "${confirmReport?.bookName}"?`}
+          message={`If you will report the book, it can't be Undo!`}
+          closeModal={closeModal}
+          successData={confirmReport}
+          successAction={handleReportProduct}
+          successClass={`btn btn-sm btn-secondary text-base-100`}
         />
       )}
     </div>
