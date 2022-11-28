@@ -12,6 +12,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
 
   const date = new Date();
   const orderDate = format(date, "PP");
+  const orderInMilliseconds = format(date, "T");
 
   const handleOrder = (event) => {
     event.preventDefault();
@@ -26,6 +27,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
       bookId: book?._id,
       bookPrice: book?.resalePrice,
       orderDate,
+      orderMs: orderInMilliseconds,
       buyerName: name,
       buyerEmail: email,
       buyerPhone: phone,

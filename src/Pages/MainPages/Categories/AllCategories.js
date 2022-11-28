@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import PrimarySpinner from '../../../Components/Spinners/PrimarySpinner';
-import DisplayBooks from './DisplayBooks';
-
+import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
+import DisplayBooks from "./DisplayBooks";
+import AddProductModal from "./AddProductModal";
 
 const AllCategories = () => {
+  const [addBook, setAddBook] = useState(null);
 
-  const { data: books, isLoading } = useQuery({
+  const {
+    data: books,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books`
-      );
+      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books`);
       const data = await res.json();
       return data;
     },
   });
-  
+
   if (isLoading) {
     return <PrimarySpinner />;
   }
@@ -32,10 +35,21 @@ const AllCategories = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {books?.map((book) => (
-              <DisplayBooks key={book?._id} book={book} />
+              <DisplayBooks
+                key={book?._id}
+                book={book}
+                setAddBook={setAddBook}
+              />
             ))}
           </div>
         </div>
+      )}
+      {addBook && (
+        <AddProductModal
+          book={addBook}
+          setAddBook={setAddBook}
+          refetch={refetch}
+        />
       )}
     </section>
   );

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import AddProductModal from "./AddProductModal";
 
 const BookDetails = () => {
   const { state: singleBook } = useLocation();
+  const [addBook, setAddBook] = useState(null);
+
   const {
     _id,
     bookName,
@@ -63,8 +65,9 @@ const BookDetails = () => {
               </div>
               <div className="mt-4 text-sm">
                 <p className="text-accent dark:text-base-100">
-                  Seller Name: <span className="font-medium mr-2">{sellerName}</span>{" "}
-                  | <span className="font-medium ml-2">{sellerLocation}</span>
+                  Seller Name:{" "}
+                  <span className="font-medium mr-2">{sellerName}</span> |{" "}
+                  <span className="font-medium ml-2">{sellerLocation}</span>
                 </p>
                 <p className="text-accent dark:text-base-100">
                   Seller contact:{" "}
@@ -76,9 +79,13 @@ const BookDetails = () => {
                 {description}
               </p>
               <div className="card-actions justify-center lg:justify-start mt-10 gap-5">
-                <button className="btn btn-sm btn-primary text-base-100">
+                <label
+                  onClick={() => setAddBook(singleBook)}
+                  htmlFor="addProduct-modal"
+                  className="btn btn-sm btn-primary text-base-100"
+                >
                   Add to order
-                </button>
+                </label>
                 <button className="btn btn-sm btn-secondary text-base-100">
                   Report to admin
                 </button>
@@ -94,6 +101,12 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
+      {addBook && (
+        <AddProductModal
+          book={addBook}
+          setAddBook={setAddBook}
+        />
+      )}
     </div>
   );
 };

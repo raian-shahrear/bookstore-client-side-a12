@@ -9,7 +9,11 @@ const BooksByCategory = () => {
   const { state: category } = useLocation();
   const [addBook, setAddBook] = useState(null);
 
-  const { data: books, isLoading, refetch } = useQuery({
+  const {
+    data: books,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["books", category?._id],
     queryFn: async () => {
       const res = await fetch(
@@ -19,7 +23,6 @@ const BooksByCategory = () => {
       return data;
     },
   });
-
 
   if (isLoading) {
     return <PrimarySpinner />;
@@ -45,7 +48,13 @@ const BooksByCategory = () => {
           </div>
         </div>
       )}
-      {addBook && <AddProductModal book={addBook} setAddBook={setAddBook} refetch={refetch} />}
+      {addBook && (
+        <AddProductModal
+          book={addBook}
+          setAddBook={setAddBook}
+          refetch={refetch}
+        />
+      )}
     </section>
   );
 };
