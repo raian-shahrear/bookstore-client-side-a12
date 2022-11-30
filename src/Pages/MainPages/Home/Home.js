@@ -6,8 +6,10 @@ import HomeHeader from "./HomeHeader";
 import HomeReview from "./HomeReview";
 import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
+import useTitle from "../../../Hooks/useTitle";
 
 const Home = () => {
+  useTitle('Home');
   const { data: books, isLoading } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
