@@ -45,7 +45,7 @@ const AllCategories = () => {
             </h2>
           ) : (
             books?.map((book) => (
-              !book.isSold &&
+              !book?.isSold &&
               <DisplayBooks
                 key={book?._id}
                 book={book}
