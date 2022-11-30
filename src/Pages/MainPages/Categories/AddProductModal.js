@@ -24,6 +24,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
 
     const ordered = {
       bookName: book?.bookName,
+      bookCoverPhoto: book?.bookCoverPhoto,
       bookId: book?._id,
       bookPrice: book?.resalePrice,
       orderDate,

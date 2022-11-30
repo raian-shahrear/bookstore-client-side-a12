@@ -19,7 +19,6 @@ const BooksByCategory = () => {
       const res = await fetch(
         `${process.env.REACT_APP_HOST_LINK}/books?id=${category?._id}`, {
           headers: {
-            "Content-Type": "application/json",
             authorization: `bearer ${localStorage.getItem("access-token")}`,
           },
         }
@@ -44,6 +43,7 @@ const BooksByCategory = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {books?.map((book) => (
+              !book.isSold &&
               <DisplayBooks
                 key={book?._id}
                 book={book}

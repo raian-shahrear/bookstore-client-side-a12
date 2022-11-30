@@ -25,9 +25,9 @@ const MyProducts = () => {
     queryKey: ["books", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books/${user?.email}`, {
+        `${process.env.REACT_APP_HOST_LINK}/books/${user?.email}`,
+        {
           headers: {
-            "Content-Type": "application/json",
             authorization: `bearer ${localStorage.getItem("access-token")}`,
           },
         }
@@ -59,13 +59,17 @@ const MyProducts = () => {
     const updateBook = {
       isAdvertised: true,
     };
-    fetch(`${process.env.REACT_APP_HOST_LINK}/books-isAdvertised/${singleBook?._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateBook),
-    })
+    fetch(
+      `${process.env.REACT_APP_HOST_LINK}/books-isAdvertised/${singleBook?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("access-token")}`,
+        },
+        body: JSON.stringify(updateBook),
+      }
+    )
       .then((res) => res.json())
       .then((updateData) => {
         if (updateData.acknowledged) {
@@ -75,7 +79,7 @@ const MyProducts = () => {
           refetch();
         }
       })
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err));
   };
 
   if (isLoading) {
@@ -90,7 +94,7 @@ const MyProducts = () => {
             My Products
           </h2>
         </div>
-        {books.length === 0 ? (
+        {books?.length === 0 ? (
           <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
             No Product is added yet
           </h2>
@@ -118,7 +122,7 @@ const MyProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {books.map((book) => (
+                {books?.map((book) => (
                   <tr
                     key={book._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"
@@ -141,23 +145,28 @@ const MyProducts = () => {
                     <td className="p-2">
                       <div
                         className={`badge badge-outline ${
-                          book?.sellStatus
-                            ? "border-success text-success"
-                            : "border-accent text-accent dark:border-base-100 dark:text-base-100"
+                          book?.isSold
+                            ? "border-secondary text-secondary"
+                            : "border text-accent dark:border-base-100 dark:text-base-100"
                         }`}
                       >
-                        {book?.sellStatus ? "Sold" : "available"}
+                        {book?.isSold ? "Sold" : "Available"}
                       </div>
                     </td>
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-                      <label
-                        onClick={() => setConfirmAdvertise(book)}
-                        htmlFor="confirmation-modal"
-                        className="btn btn-info btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-primary hover:border-transparent disabled:bg-gray-200 disabled:text-gray-500"
-                        disabled={book?.isAdvertised && true}
-                      >
-                        Advertise
-                      </label>
+                      {book?.isAdvertised || book?.isSold ? (
+                        <label className="badge badge-outline rounded-lg font-medium uppercase border-success text-success lg:py-3.5 lg:px-3">
+                          {book?.isSold ? "N/A" : "Available"}
+                        </label>
+                      ) : (
+                        <label
+                          onClick={() => setConfirmAdvertise(book)}
+                          htmlFor="confirmation-modal"
+                          className="btn btn-info btn-xs text-base-100 lg:btn-sm transition-all duration-300 hover:bg-primary hover:border-transparent disabled:bg-gray-200 disabled:text-gray-500"
+                        >
+                          Advertise
+                        </label>
+                      )}
                       <label
                         onClick={() => setConfirmDelete(book)}
                         htmlFor="confirmation-modal"
@@ -190,7 +199,7 @@ const MyProducts = () => {
           message={
             <>
               <p className="font-medium">{`Book: ${confirmAdvertise?.bookName}`}</p>
-              <p className="text-sm ml-3">{`Writer: ${confirmAdvertise?.writerName}`}</p>
+              <p className="text-sm ml-3">{`by ${confirmAdvertise?.writerName}`}</p>
             </>
           }
           closeModal={closeModal}

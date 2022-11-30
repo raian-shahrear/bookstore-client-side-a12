@@ -1,19 +1,24 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import paymentImg from "../../../Assets/payment/stripe_payments.svg";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../../Components/Form/CheckoutForm";
+import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PK}`);
 
 const Payment = () => {
   const order = useLoaderData();
   const { bookName, bookPrice, orderDate } = order;
+  const navigation = useNavigation();
+  if(navigation.state === "loading"){
+    return <PrimarySpinner />
+  }
   return (
     <section>
       <div>
-        <div className="overflow-hidden h-full mt-10 bg-gray-100 dark:bg-gray-800">
+        <div className="overflow-hidden h-full mt-10 pb-10 bg-gray-100 dark:bg-gray-800">
           <div className="px-4 md:px-24 lg:px-0 py-10 lg:py-0 mx-auto md:max-w-full lg:max-w-screen-2xl">
             <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
               <div className="w-full text-center lg:text-start mb-12 lg:pl-16 lg:mb-0 lg:w-7/12">

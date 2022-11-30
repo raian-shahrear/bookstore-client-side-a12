@@ -23,7 +23,6 @@ const AllUser = () => {
       const res = await fetch(
         `${process.env.REACT_APP_HOST_LINK}/users?role=user`, {
           headers: {
-            "Content-Type": "application/json",
             authorization: `bearer ${localStorage.getItem("access-token")}`,
           },
         }
@@ -61,12 +60,12 @@ const AllUser = () => {
       <div className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl">
         <div className="lg:w-1/2 mx-auto">
           <h2 className="text-4xl font-bold text-accent dark:text-info text-center lg:mt-10 mb-10 pb-3 border-b dark:border-gray-700">
-            My Orders
+            All Buyers
           </h2>
         </div>
         {users?.length === 0 ? (
           <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
-            No Order is placed yet
+            No Buyer is added yet
           </h2>
         ) : (
           <div className="overflow-x-auto relative">
@@ -85,13 +84,13 @@ const AllUser = () => {
                   <th scope="col" className="py-3 px-2 w-32">
                     Role
                   </th>
-                  <th scope="col" className="py-3 px-2 text-center w-1/4">
+                  <th scope="col" className="py-3 px-2 w-1/4">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {users?.map((user) => (
                   <tr
                     key={user?._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"
@@ -100,10 +99,14 @@ const AllUser = () => {
                       scope="row"
                       className="py-2 px-3 font-medium text-gray-900 dark:text-gray-200 whitespace-nowrap"
                     >
-                      {user?.userName}
+                      <div className="avatar">
+                        <div className="w-12 rounded-xl">
+                          <img src={user?.imageUrl} alt="buyerPhoto" />
+                        </div>
+                      </div>
                     </th>
+                    <td className="p-2">{user?.userName}</td>
                     <td className="p-2">{user?.userEmail}</td>
-                    <td className="p-2">{user?.buyerEmail}</td>
                     <td className="p-2">{user?.role}</td>
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                       <label

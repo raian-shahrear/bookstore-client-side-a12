@@ -24,9 +24,9 @@ const MyOrders = () => {
     queryKey: ["orders", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/orders/${user?.email}`, {
+        `${process.env.REACT_APP_HOST_LINK}/orders/${user?.email}`,
+        {
           headers: {
-            "Content-Type": "application/json",
             authorization: `bearer ${localStorage.getItem("access-token")}`,
           },
         }
@@ -66,7 +66,7 @@ const MyOrders = () => {
             My Orders
           </h2>
         </div>
-        {orders.length === 0 ? (
+        {orders?.length === 0 ? (
           <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
             No Order is placed yet
           </h2>
@@ -76,12 +76,15 @@ const MyOrders = () => {
               <thead className="text-xs text-accent uppercase bg-gray-200 dark:text-gray-200 dark:bg-gray-800">
                 <tr>
                   <th scope="col" className="py-3 px-2 w-20">
+                    
+                  </th>
+                  <th scope="col" className="py-3 px-2 w-20">
                     Ordered Date
                   </th>
                   <th scope="col" className="py-3 px-2 w-28">
                     Your Name
                   </th>
-                  <th scope="col" className="py-3 px-2 w-28">
+                  <th scope="col" className="py-3 px-2 w-28 hidden lg:inline-block">
                     Your Email
                   </th>
                   <th scope="col" className="py-3 px-2 w-32">
@@ -93,7 +96,7 @@ const MyOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {orders?.map((order) => (
                   <tr
                     key={order?._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"
@@ -102,11 +105,32 @@ const MyOrders = () => {
                       scope="row"
                       className="py-2 px-3 font-medium text-gray-900 dark:text-gray-200 whitespace-nowrap"
                     >
+                      <div className="avatar">
+                        <div className="w-12 rounded-full">
+                          <img src={order?.bookCoverPhoto} alt="book-cover" />
+                        </div>
+                      </div>
+                    </th>
+                    <th
+                      scope="row"
+                      className="py-2 px-3 font-medium text-gray-900 dark:text-gray-200 whitespace-nowrap"
+                    >
                       {order?.orderDate}
                     </th>
                     <td className="p-2">{order?.buyerName}</td>
-                    <td className="p-2">{order?.buyerEmail}</td>
-                    <td className="p-2">{order?.bookName}</td>
+                    <td className="p-2 hidden lg:inline-block">{order?.buyerEmail}</td>
+                    <td className="p-2">
+                      {order?.bookName}
+                      {order?.transactionId && (
+                        <p className="mt-2">
+                          TrxID:{" "}
+                          <span className="text-success">
+                            {order?.transactionId}
+                          </span>
+                        </p>
+                      )}
+                    </td>
+
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                       {order?.bookPrice && !order?.paid ? (
                         <Link to={`/dashboard/payment/${order?._id}`}>
@@ -117,7 +141,7 @@ const MyOrders = () => {
                       ) : (
                         <div
                           className="badge badge-outline 
-                              border-success text-success dark:border-base-100 dark:text-base-100"
+                              border-success text-success dark:border-base-100 dark:text-base-100 lg:py-3.5 lg:px-5 rounded-lg "
                         >
                           Paid
                         </div>

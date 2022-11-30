@@ -7,12 +7,14 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
 import useJWToken from "../../../Hooks/useJWToken";
+import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
 
 const Login = () => {
   const { signInUser, resetPassword, googleUser, facebookUser } =
     useContext(UserContext);
   const [displayPass, setDisplayPass] = useState(false);
-  const [firebaseError, setFirebaseError] = useState('');
+  const [dataLoading, setDataLoading] = useState(false);
+  const [firebaseError, setFirebaseError] = useState("");
   const {
     register,
     handleSubmit,
@@ -30,6 +32,7 @@ const Login = () => {
   }
 
   const handleLogin = (data, event) => {
+    setDataLoading(true);
     const { email, password } = data;
     signInUser(email, password)
       .then((result) => {
@@ -38,11 +41,13 @@ const Login = () => {
         toast.success("Successfully login!");
         setEmailForToken(email);
         event.target.reset();
-        setFirebaseError('')
+        setFirebaseError("");
+        setDataLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setFirebaseError(err.message);
+        setDataLoading(false);
       });
   };
 
@@ -108,7 +113,7 @@ const Login = () => {
               New to BookStore?{" "}
               <Link
                 to="/signup"
-                className="transition-all duration-300 hover:underline"
+                className="transition-all duration-300 text-primary dark:text-info hover:text-gray-500 dark:hover:text-gray-500  hover:underline"
               >
                 Create a new account
               </Link>
@@ -120,7 +125,7 @@ const Login = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm">
-                    Email address
+                    Email address *
                   </label>
                   <input
                     type="email"
@@ -140,7 +145,7 @@ const Login = () => {
                 <div className="space-y-2 relative">
                   <div className="flex justify-between">
                     <label htmlFor="password" className="block text-sm">
-                      Password
+                      Password *
                     </label>
                   </div>
                   <input
@@ -175,15 +180,22 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <input
-                type="submit"
-                value="Login"
-                className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 cursor-pointer dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
-              />
+              <div className="relative">
+                <input
+                  type="submit"
+                  value="Login"
+                  className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-base-100 cursor-pointer dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
+                />
+                {dataLoading && (
+                  <div className="absolute bottom-1.5 left-28">
+                    <SmallSpinner />
+                  </div>
+                )}
+              </div>
             </form>
-            {
-              firebaseError && <p className="text-error text-sm mt-2">{firebaseError}</p>
-            }
+            {firebaseError && (
+              <p className="text-error text-sm mt-2">{firebaseError}</p>
+            )}
             <div className="flex items-center w-full my-6">
               <hr className="w-full text-gray-400" />
               <p className="px-3 text-gray-400">OR</p>

@@ -12,16 +12,22 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
-      {isAdmin ? (
-            <p>Welcome to Admin Dashboard</p>
-          ) : (
+      <h2 className="text-4xl font-bold text-center mt-48 lg:ml-32 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
+        {!adminLoading && isAdmin ? (
+          <div>
             <p>
-              Welcome{" "}
-              <span className="text-primary mx-2">{user?.displayName}</span> to
-              Your DashBoard
+              Hello{" "}
+              <span className="text-primary mx-2">{user?.displayName}</span>
             </p>
-          )}
+            <p className="mt-6">Welcome to Admin Dashboard</p>
+          </div>
+        ) : (
+          <p>
+            Welcome{" "}
+            <span className="text-primary mx-2">{user?.displayName}</span> to
+            Your DashBoard
+          </p>
+        )}
       </h2>
     </div>
   );

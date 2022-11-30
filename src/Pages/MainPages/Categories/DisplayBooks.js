@@ -25,6 +25,7 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
     sellerLocation,
     dateOfPost,
     monthOfUse,
+    isVerified
   } = book;
 
   const navigate = useNavigate();
@@ -69,12 +70,12 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
           <h3 className="card-title text-accent dark:text-gray-300">
             {bookName}
           </h3>
-          <p className="text-sm text-gray-900 dark:text-base-100 -mt-2 font-medium">
-            {writerName}
+          <p className="text-sm text-gray-900 dark:text-base-100 -mt-2">
+            by <span className="font-medium">{writerName}</span>
           </p>
-          <p className="text-sm text-gray-900 dark:text-base-100">Owned by,</p>
+          <p className="text-sm text-gray-900 dark:text-base-100">Added by{isVerified &&  <span> a <span className="font-medium text-primary dark:text-info">verified seller</span></span> },</p>
           <p className="flex items-center gap-2 text-sm text-gray-900 dark:text-base-100 -mt-2 font-medium">
-            <FaCheckCircle className="text-primary dark:text-info" />{" "}
+            {isVerified && <FaCheckCircle className="text-primary dark:text-info" />}
             {sellerName} | {sellerLocation}
           </p>
           <div className="flex items-center justify-between flex-wrap">

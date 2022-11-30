@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import SmallSpinner from "../Spinners/SmallSpinner";
 
-
-const CheckoutForm = ({order}) => {
-  const {_id, buyerName, buyerEmail, buyerPhone, bookName, bookPrice, orderDate} = order;
+const CheckoutForm = ({ order }) => {
+  const {
+    _id,
+    buyerName,
+    buyerEmail,
+    buyerPhone,
+    bookName,
+    bookId,
+    bookPrice,
+    orderDate,
+  } = order;
   const [paymentError, setPaymentError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [transactionID, setTransactionID] = useState("");
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/create-payment-intent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("access-token")}`,
       },
       body: JSON.stringify({ bookPrice }),
     })
@@ -44,8 +51,8 @@ const CheckoutForm = ({order}) => {
       return;
     }
 
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
       card,
     });
 
@@ -61,32 +68,31 @@ const CheckoutForm = ({order}) => {
     setPaymentError("");
 
     // confirm payment
-    const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(
-      clientSecret,
-      {
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
             name: buyerName,
-            email: buyerEmail
+            email: buyerEmail,
           },
         },
-      },
-    );
+      });
     if (confirmError) {
       setPaymentError(confirmError.message);
-      console.error(confirmError)
+      console.error(confirmError);
       return;
     }
     if (paymentIntent.status === "succeeded") {
       // store payment info to database
       const payment = {
         bookName,
+        bookId,
         orderedId: _id,
         bookPrice,
         buyerName,
         buyerEmail,
-        transactionId: paymentIntent.id
+        transactionId: paymentIntent.id,
       };
       fetch(`${process.env.REACT_APP_HOST_LINK}/payments`, {
         method: "POST",
@@ -101,14 +107,13 @@ const CheckoutForm = ({order}) => {
           if (data.insertedId) {
             setSuccessMessage("Congrats! your payment is successful.");
             setTransactionID(paymentIntent.id);
-            navigate('/dashboard/my-orders');
-            toast.success("Congrats! your payment is successful.")
+            // navigate('/dashboard/my-orders');
+            toast.success("Congrats! your payment is successful.");
           }
         });
     }
-    
-  }
-   
+  };
+
   return (
     <div className="mt-10 w-96">
       {paymentError && (
@@ -123,26 +128,36 @@ const CheckoutForm = ({order}) => {
         </div>
       )}
       <form onSubmit={handleSubmit} className="flex flex-col mt-6">
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#424770',
-              '::placeholder': {
-                color: '#aab7c4',
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
               },
             },
-            invalid: {
-              color: '#9e2146',
-            },
-          },
-        }}
-      />
-      <button type="submit" disabled={!stripe} className="btn btn-sm text-base-100 mt-4">
-        Pay
-      </button>
-    </form>
+          }}
+        />
+        {!transactionID ? (
+          <button
+            type="submit"
+            disabled={!stripe || !clientSecret}
+            className="btn text-base-100 mt-4 w-full"
+          >
+            Pay
+          </button>
+        ) : (
+          <div className="badge badge-outline mt-4 py-5 rounded-md w-full font-semibold">
+            PAID
+          </div>
+        )}
+      </form>
     </div>
   );
 };

@@ -22,7 +22,6 @@ const ReportedProducts = () => {
     queryFn: async () => {
       const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books-isReported`, {
         headers: {
-          "Content-Type": "application/json",
           authorization: `bearer ${localStorage.getItem("access-token")}`,
         },
       });
@@ -60,7 +59,7 @@ const ReportedProducts = () => {
             Reported Products
           </h2>
         </div>
-        {books.length === 0 ? (
+        {books?.length === 0 ? (
           <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
             No Product is reported yet
           </h2>
@@ -88,7 +87,7 @@ const ReportedProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {books.map((book) => (
+                {books?.map((book) => (
                   <tr
                     key={book._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"

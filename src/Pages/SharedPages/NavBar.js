@@ -78,19 +78,6 @@ const NavBar = () => {
           <li>
             <NavLink
               onClick={() => setIsMenuOpen(false)}
-              to="/all-categories"
-              className={({ isActive }) =>
-                isActive
-                  ? "font-bold tracking-wide text-primary dark:text-info"
-                  : "font-bold tracking-wide text-gray-700 dark:text-base-100 transition-colors duration-300 hover:text-primary dark:hover:text-info"
-              }
-            >
-              All Categories
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              onClick={() => setIsMenuOpen(false)}
               to="/dashboard"
               className={({ isActive }) =>
                 isActive

@@ -7,12 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
 import useJWToken from "../../../Hooks/useJWToken";
-
+import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
 
 const SignUp = () => {
   const [displayPass, setDisplayPass] = useState(false);
-  const [firebaseError, setFirebaseError] = useState('');
-  const {createUser, updateUser, googleUser, facebookUser, signOutUser} = useContext(UserContext);
+  const [dataLoading, setDataLoading] = useState(false);
+  const [firebaseError, setFirebaseError] = useState("");
+  const { createUser, updateUser, googleUser, facebookUser, signOutUser } =
+    useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -25,11 +27,12 @@ const SignUp = () => {
   const [token] = useJWToken(emailForToken);
   if (token) {
     signOutUser();
-    localStorage.removeItem('access-token');
+    localStorage.removeItem("access-token");
     navigate("/login");
   }
 
   const handleSignUp = (data, event) => {
+    setDataLoading(true);
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
     const formData = new FormData();
     formData.append("image", data.image[0]);
@@ -44,24 +47,26 @@ const SignUp = () => {
           const registeredUser = {
             userName: data?.name,
             userEmail: data?.email,
-            role: data?.customer
+            imageUrl: imgData?.data?.url,
+            role: data?.customer,
           };
-        // console.log(registeredUser)
-        createUser(data?.email, data?.password)
-        .then(result => {
-          const user = result.user;
-          console.log(user);
-          updateUserProfile(data?.name, imgData?.data?.url, registeredUser)
-          event.target.reset();
-          setFirebaseError("");
-        })
-        .catch((err) => {
-          console.error(err);
-          setFirebaseError(err.message);
-        });
+          // console.log(registeredUser)
+          createUser(data?.email, data?.password)
+            .then((result) => {
+              const user = result.user;
+              console.log(user);
+              updateUserProfile(data?.name, imgData?.data?.url, registeredUser);
+              event.target.reset();
+              setFirebaseError("");
+            })
+            .catch((err) => {
+              console.error(err);
+              setFirebaseError(err.message);
+              setDataLoading(false);
+            });
         }
-      })
-  }
+      });
+  };
 
   // update user profile
   const updateUserProfile = (name, photo, registeredUser) => {
@@ -73,7 +78,7 @@ const SignUp = () => {
       .catch((err) => {
         console.error(err);
       });
-  }; 
+  };
 
   // google register
   const handleGoogleUser = () => {
@@ -84,7 +89,8 @@ const SignUp = () => {
         const registeredUser = {
           userName: user?.displayName,
           userEmail: user?.email,
-          role: "user"
+          imageUrl: user?.photoURL,
+          role: "user",
         };
         saveRegisteredUser(registeredUser);
         setFirebaseError("");
@@ -104,7 +110,8 @@ const SignUp = () => {
         const registeredUser = {
           userName: user?.displayName,
           userEmail: user?.email,
-          role: "user"
+          imageUrl: user?.photoURL,
+          role: "user",
         };
         saveRegisteredUser(registeredUser);
         setFirebaseError("");
@@ -115,7 +122,6 @@ const SignUp = () => {
       });
   };
 
-
   // save registered user to database
   const saveRegisteredUser = (registeredUser) => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/users`, {
@@ -124,16 +130,20 @@ const SignUp = () => {
         "Content-Type": "application/json",
         authorization: `bearer ${localStorage.getItem("access-token")}`,
       },
-      body: JSON.stringify({registeredUser}),
+      body: JSON.stringify({ registeredUser }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
           setEmailForToken(registeredUser?.userEmail);
-          toast.success("Successfully create an account!");
+          toast.success(
+            "Successfully create an account! Please login by using your valid email & password"
+          );
+          setDataLoading(false);
         } else {
           toast.error(data.message);
           signOutUser();
+          setDataLoading(false);
         }
       });
   };
@@ -154,7 +164,7 @@ const SignUp = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="transition-all duration-300 hover:underline"
+                className="transition-all duration-300 text-primary dark:text-info hover:text-gray-500 dark:hover:text-gray-500  hover:underline"
               >
                 Please Login
               </Link>
@@ -166,7 +176,7 @@ const SignUp = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label htmlFor="fname" className="block text-sm">
-                    Name
+                    Name *
                   </label>
                   <input
                     type="text"
@@ -183,7 +193,7 @@ const SignUp = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="img" className="block text-sm">
-                    Upload image
+                    Upload image *
                   </label>
                   <input
                     type="file"
@@ -199,7 +209,7 @@ const SignUp = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm">
-                    Email address
+                    Email address *
                   </label>
                   <input
                     type="email"
@@ -207,8 +217,7 @@ const SignUp = () => {
                       required: "This field is required",
                       pattern: {
                         value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-                        message:
-                          "Please set email in right pattern",
+                        message: "Please set email in right pattern",
                       },
                     })}
                     id="email"
@@ -224,7 +233,7 @@ const SignUp = () => {
                 <div className="space-y-2 relative">
                   <div className="flex justify-between">
                     <label htmlFor="password" className="block text-sm">
-                      Password
+                      Password *
                     </label>
                   </div>
                   <input
@@ -260,7 +269,7 @@ const SignUp = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <label htmlFor="option" className="block text-sm">
-                      Please, set your role
+                      Please, set your role *
                     </label>
                   </div>
                   <select
@@ -279,15 +288,22 @@ const SignUp = () => {
                   )}
                 </div>
               </div>
-              <input
-                type="submit"
-                value="Sign Up"
-                className="w-full px-8 py-3 cursor-pointer font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
-              />
+              <div className="relative">
+                <input
+                  type="submit"
+                  value="Sign Up"
+                  className="w-full px-8 py-3 cursor-pointer font-semibold rounded-md bg-primary text-base-100 dark:bg-[#187bc7] dark:text-base-100 transition-all duration-300 hover:bg-[#084370] dark:hover:bg-primary"
+                />
+                {dataLoading && (
+                  <div className="absolute bottom-1.5 left-28">
+                    <SmallSpinner />
+                  </div>
+                )}
+              </div>
             </form>
-            {
-              firebaseError && <p className="text-error text-sm mt-2">{firebaseError}</p>
-            }
+            {firebaseError && (
+              <p className="text-error text-sm mt-2">{firebaseError}</p>
+            )}
             <div className="flex items-center w-full my-6">
               <hr className="w-full text-gray-400" />
               <p className="px-3 text-gray-400">OR</p>
@@ -295,7 +311,7 @@ const SignUp = () => {
             </div>
             <div className="my-6 space-y-4">
               <button
-              onClick={handleGoogleUser}
+                onClick={handleGoogleUser}
                 aria-label="SignUp with Google"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"
@@ -304,7 +320,7 @@ const SignUp = () => {
                 <p>SignUp with Google</p>
               </button>
               <button
-              onClick={handleFacebookUser}
+                onClick={handleFacebookUser}
                 aria-label="SignUp with Facebook"
                 type="button"
                 className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-primary transition-all duration-300 hover:text-primary dark:hover:text-gray-300"
