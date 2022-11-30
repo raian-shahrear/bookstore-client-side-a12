@@ -54,7 +54,7 @@ const SignUp = () => {
           createUser(data?.email, data?.password)
             .then((result) => {
               const user = result.user;
-              console.log(user);
+              // console.log(user);
               updateUserProfile(data?.name, imgData?.data?.url, registeredUser);
               event.target.reset();
               setFirebaseError("");
@@ -85,7 +85,7 @@ const SignUp = () => {
     googleUser()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         const registeredUser = {
           userName: user?.displayName,
           userEmail: user?.email,
@@ -106,7 +106,7 @@ const SignUp = () => {
     facebookUser()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         const registeredUser = {
           userName: user?.displayName,
           userEmail: user?.email,

@@ -37,7 +37,7 @@ const Login = () => {
     signInUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         toast.success("Successfully login!");
         setEmailForToken(email);
         event.target.reset();
@@ -70,7 +70,7 @@ const Login = () => {
     googleUser()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         toast.success("Successfully login through Google!");
         setEmailForToken(user.email);
         setFirebaseError("");
@@ -86,7 +86,7 @@ const Login = () => {
     facebookUser()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         toast.success("Successfully login through Facebook!");
         setEmailForToken(user.email);
         setFirebaseError("");
