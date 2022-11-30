@@ -2,11 +2,11 @@
 A Resale Bookstore Website
 
 ## Live Website
-Please visit [https://bookstore-65836.web.app](https://bookstore-65836.web.app/)
+Please visit `[https://bookstore-65836.web.app](https://bookstore-65836.web.app/)`
 
 ## For accessing to Admin role: 
-adminEmail: elon@gmail.com
-adminPassword: 123ABC$
+`adminEmail:` elon@gmail.com
+`adminPassword:`: 123ABC$
 
 ## Main Feature
 ### 1. TailwindCss and DaisyUI has been used.
