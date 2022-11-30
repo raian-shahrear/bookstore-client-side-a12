@@ -12,7 +12,7 @@ import useTitle from "../../../Hooks/useTitle";
 
 const Login = () => {
   useTitle('Login');
-  const { signInUser, resetPassword, googleUser, facebookUser } =
+  const { signInUser, resetPassword, googleUser, facebookUser, user } =
     useContext(UserContext);
   const [displayPass, setDisplayPass] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
@@ -31,6 +31,10 @@ const Login = () => {
   const [token] = useJWToken(emailForToken);
   if (token) {
     navigate(from, { replace: true });
+  }
+
+  if(user?.uid){
+    return navigate('/');
   }
 
   const handleLogin = (data, event) => {

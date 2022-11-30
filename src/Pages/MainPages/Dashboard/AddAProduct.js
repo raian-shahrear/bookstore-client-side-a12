@@ -19,7 +19,6 @@ const AddAProduct = () => {
     axios
       .get(`${process.env.REACT_APP_HOST_LINK}/categories`, {
         headers: {
-          "Content-Type": "application/json",
           authorization: `bearer ${localStorage.getItem("access-token")}`,
         },
       })

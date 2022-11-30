@@ -15,7 +15,7 @@ const SignUp = () => {
   const [displayPass, setDisplayPass] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [firebaseError, setFirebaseError] = useState("");
-  const { createUser, updateUser, googleUser, facebookUser, signOutUser } =
+  const { createUser, updateUser, googleUser, facebookUser, signOutUser, user } =
     useContext(UserContext);
   const {
     register,
@@ -31,6 +31,10 @@ const SignUp = () => {
     signOutUser();
     localStorage.removeItem("access-token");
     navigate("/login");
+  }
+
+  if(user?.uid){
+    return navigate('/');
   }
 
   const handleSignUp = (data, event) => {
