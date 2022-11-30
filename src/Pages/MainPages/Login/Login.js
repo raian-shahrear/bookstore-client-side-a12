@@ -8,8 +8,10 @@ import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
 import useJWToken from "../../../Hooks/useJWToken";
 import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
+import useTitle from "../../../Hooks/useTitle";
 
 const Login = () => {
+  useTitle('Login');
   const { signInUser, resetPassword, googleUser, facebookUser } =
     useContext(UserContext);
   const [displayPass, setDisplayPass] = useState(false);

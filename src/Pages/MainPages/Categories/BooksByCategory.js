@@ -4,8 +4,10 @@ import { useLocation } from "react-router-dom";
 import AddProductModal from "./AddProductModal";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import DisplayBooks from "./DisplayBooks";
+import useTitle from "../../../Hooks/useTitle";
 
 const BooksByCategory = () => {
+  useTitle("Book's Category");
   const { state: category } = useLocation();
   const [addBook, setAddBook] = useState(null);
 

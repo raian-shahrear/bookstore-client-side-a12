@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import { UserContext } from "../../../Contexts/AuthContext";
 import useAdmin from "../../../Hooks/useAdmin";
+import useTitle from "../../../Hooks/useTitle";
 
 const Dashboard = () => {
+  useTitle('Dashboard');
   const { user } = useContext(UserContext);
   const [isAdmin, adminLoading] = useAdmin(user?.email);
 

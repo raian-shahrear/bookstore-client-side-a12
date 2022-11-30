@@ -3,9 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import AddProductModal from "./AddProductModal";
 import { toast } from "react-toastify";
+import useTitle from "../../../Hooks/useTitle";
 
 
 const BookDetails = () => {
+  useTitle('Book Details');
   const { state: singleBook } = useLocation();
   const [addBook, setAddBook] = useState(null);
   const [confirmReport, setConfirmReport] = useState(null);

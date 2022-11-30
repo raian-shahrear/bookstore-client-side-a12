@@ -3,8 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from '../../../Components/Spinners/PrimarySpinner';
 import { toast } from "react-toastify";
 import ConfirmationModal from '../../../Components/Modal/ConfirmationModal';
+import useTitle from '../../../Hooks/useTitle';
 
 const AllUser = () => {
+  useTitle('All Buyers');
   const [confirmDelete, setConfirmDelete] = useState(null);
 
   // close delete modal

@@ -4,8 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import { toast } from "react-toastify";
+import useTitle from "../../../Hooks/useTitle";
 
 const MyProducts = () => {
+  useTitle('My Products');
   const { user } = useContext(UserContext);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [confirmAdvertise, setConfirmAdvertise] = useState(null);
@@ -156,7 +158,7 @@ const MyProducts = () => {
                     <td className="p-2 mt-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                       {book?.isAdvertised || book?.isSold ? (
                         <label className="badge badge-outline rounded-lg font-medium uppercase border-success text-success lg:py-3.5 lg:px-3">
-                          {book?.isSold ? "N/A" : "Available"}
+                          {book?.isSold ? "N/A" : "Advertised"}
                         </label>
                       ) : (
                         <label

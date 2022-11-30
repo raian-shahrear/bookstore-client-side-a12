@@ -5,8 +5,10 @@ import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import useTitle from "../../../Hooks/useTitle";
 
 const MyOrders = () => {
+  useTitle('My Orders');
   const { user } = useContext(UserContext);
   const [confirmDelete, setConfirmDelete] = useState(null);
 

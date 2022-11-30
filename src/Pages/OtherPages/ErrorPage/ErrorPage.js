@@ -3,14 +3,16 @@ import Lottie from "lottie-react";
 import Error from "../../../Assets/animation/404-error-animation.json";
 import {useRouteError} from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import useTitle from "../../../Hooks/useTitle";
 
 const ErrorPage = () => {
   const error = useRouteError();
+  useTitle(`Error ${error?.status}`);
   return (
     <div className="h-screen flex flex-col items-center justify-center text-center dark:bg-gray-900">
       <div className="text-accent dark:text-info">
-        <h2 className="text-8xl font-bold">{error.status}</h2>
-        <h3 className="text-3xl font-bold mt-8">{error.message || error.statusText}</h3>
+        <h2 className="text-8xl font-bold">{error?.status}</h2>
+        <h3 className="text-3xl font-bold mt-8">{error?.message || error?.statusText}</h3>
       </div>
       <div className="lg:w-[600px] mx-auto">
         <Lottie animationData={Error} loop={true} />

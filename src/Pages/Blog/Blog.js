@@ -5,8 +5,10 @@ import QueAns1 from "./QueAns1";
 import QueAns2 from "./QueAns2";
 import QueAns3 from "./QueAns3";
 import QueAns4 from "./QueAns4";
+import useTitle from "../../Hooks/useTitle";
 
 const Blog = () => {
+  useTitle('Blog');
   return (
     <div className="dark:bg-gray-900">
       <header className="bg-gray-100 dark:bg-gray-800 py-10">

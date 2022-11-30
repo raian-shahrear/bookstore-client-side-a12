@@ -8,8 +8,10 @@ import { UserContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
 import useJWToken from "../../../Hooks/useJWToken";
 import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
+import useTitle from "../../../Hooks/useTitle";
 
 const SignUp = () => {
+  useTitle('Sign Up');
   const [displayPass, setDisplayPass] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [firebaseError, setFirebaseError] = useState("");

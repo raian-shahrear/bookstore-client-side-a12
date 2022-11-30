@@ -6,9 +6,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
 import {useNavigate} from 'react-router-dom';
+import useTitle from "../../../Hooks/useTitle";
 
 
 const AddAProduct = () => {
+  useTitle('Add Product');
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [uploading, setUploading] = useState(false);

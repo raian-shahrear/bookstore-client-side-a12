@@ -4,8 +4,10 @@ import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import DisplayBooks from "./DisplayBooks";
 import AddProductModal from "./AddProductModal";
 import { UserContext } from "../../../Contexts/AuthContext";
+import useTitle from "../../../Hooks/useTitle";
 
 const AllCategories = () => {
+  useTitle('Our Library');
   const { user } = useContext(UserContext);
   const [addBook, setAddBook] = useState(null);
 
