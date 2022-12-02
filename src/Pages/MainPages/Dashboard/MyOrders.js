@@ -89,7 +89,7 @@ const MyOrders = () => {
                   <th scope="col" className="py-3 px-2 w-28 hidden lg:inline-block">
                     Your Email
                   </th>
-                  <th scope="col" className="py-3 px-2 w-32">
+                  <th scope="col" className="py-3 px-2 w-1/4">
                     Book Ordered
                   </th>
                   <th scope="col" className="py-3 px-2 text-center w-1/4">

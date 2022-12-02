@@ -14,12 +14,7 @@ const Home = () => {
     queryKey: ["books"],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books-isAdvertised`, {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("access-token")}`,
-          },
-        }
-      );
+        `${process.env.REACT_APP_HOST_LINK}/books-isAdvertised`);
       const data = await res.json();
       return data;
     },

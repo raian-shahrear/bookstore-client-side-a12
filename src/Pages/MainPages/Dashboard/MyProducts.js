@@ -42,6 +42,9 @@ const MyProducts = () => {
   // delete book by id
   const handleBookDelete = (eachBook) => {
     fetch(`${process.env.REACT_APP_HOST_LINK}/books/${eachBook?._id}`, {
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
       method: "DELETE",
     })
       .then((res) => res.json())

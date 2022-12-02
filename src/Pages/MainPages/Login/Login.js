@@ -33,9 +33,9 @@ const Login = () => {
     navigate(from, { replace: true });
   }
 
-  if(user?.uid){
-    return navigate('/');
-  }
+  // if(user?.uid){
+  //   return navigate('/');
+  // }
 
   const handleLogin = (data, event) => {
     setDataLoading(true);

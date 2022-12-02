@@ -16,3 +16,4 @@ adminPassword: `123ABC$`
 ### 5. Node.js (Express.js) has been used as server.
 ### 6. NoSQL (MongoDB) database has been used.
 ### 7. JWT -> access token has been used for Authorization to distinguish User, Seller and Admin role.
+### 8. Payment system has been implemented by using Stripe.

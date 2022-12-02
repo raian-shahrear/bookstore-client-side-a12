@@ -11,12 +11,11 @@ import SmallSpinner from "../../../Components/Spinners/SmallSpinner";
 import useTitle from "../../../Hooks/useTitle";
 
 const SignUp = () => {
-  useTitle('Sign Up');
+  useTitle("Sign Up");
   const [displayPass, setDisplayPass] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [firebaseError, setFirebaseError] = useState("");
-  const { createUser, updateUser, googleUser, facebookUser, signOutUser, user } =
-    useContext(UserContext);
+  const { createUser, updateUser, googleUser, facebookUser, signOutUser, user } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -33,9 +32,9 @@ const SignUp = () => {
     navigate("/login");
   }
 
-  if(user?.uid){
-    return navigate('/');
-  }
+  // if (user?.uid) {
+  //   return navigate("/");
+  // }
 
   const handleSignUp = (data, event) => {
     setDataLoading(true);
@@ -134,7 +133,6 @@ const SignUp = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("access-token")}`,
       },
       body: JSON.stringify({ registeredUser }),
     })
@@ -143,7 +141,7 @@ const SignUp = () => {
         if (data.acknowledged) {
           setEmailForToken(registeredUser?.userEmail);
           toast.success(
-            "Successfully create an account! Please login by using your valid email & password"
+            "Your account is created! Now, please login by using your valid email & password"
           );
           setDataLoading(false);
         } else {
