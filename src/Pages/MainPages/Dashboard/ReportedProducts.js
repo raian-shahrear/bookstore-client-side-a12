@@ -91,7 +91,7 @@ const ReportedProducts = () => {
               <tbody>
                 {books?.map((book) => (
                   <tr
-                    key={book._id}
+                    key={book?._id}
                     className="bg-white text-accent dark:bg-gray-600 dark:text-gray-200 border-b"
                   >
                     <th

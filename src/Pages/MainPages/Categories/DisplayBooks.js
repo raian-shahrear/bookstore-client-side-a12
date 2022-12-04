@@ -15,6 +15,7 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
   };
 
   const {
+    _id,
     bookCoverPhoto,
     bookName,
     writerName,
@@ -29,8 +30,8 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
   } = book;
 
   const navigate = useNavigate();
-  const handleDetails = (singleBook) => {
-    navigate(`/books-details/${singleBook._id}`, { state: singleBook });
+  const handleDetails = (singleBook, bookId) => {
+    navigate(`/books-details/${bookId}`, { state: singleBook });
   };
 
   const handleReportProduct = (eachBook) => {
@@ -83,7 +84,7 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
               <span>Month of used: {monthOfUse}</span>{" "}
               <span>Book's condition: {bookCondition} </span>
             </p>
-            <button onClick={() => handleDetails(book)}>
+            <button onClick={() => handleDetails(book, _id)}>
               <MdOutlineMenuBook
                 title="See details"
                 className="text-3xl text-gray-900 dark:text-base-100 transition-all duration-300 hover:text-primary dark:hover:text-info"

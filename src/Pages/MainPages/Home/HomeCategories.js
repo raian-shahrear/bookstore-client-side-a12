@@ -13,14 +13,14 @@ const HomeCategories = () => {
     .catch((err) => console.error(err));
   }, [])
 
-  const handleNavigation = (category) => { 
-    navigate(`/books/${category._id}`, { state: category });
+  const handleNavigation = (category, id) => { 
+    navigate(`/books/${id}`, { state: category });
   }
 
   return (
     <div className="flex flex-wrap justify-between gap-6">
       {categories?.map((category) => (
-        <button key={category?._id} onClick={()=> handleNavigation(category)} className="w-44 h-full block custom-home-cat">
+        <button key={category?._id} onClick={()=> handleNavigation(category, category?._id)} className="w-44 h-full block custom-home-cat">
           <div className="bg-gray-100 dark:bg-gray-300 h-44 w-44 rounded-full flex justify-center items-center">
             <img src={category?.image} alt="category" className="w-28 h-28 z-10" />
           </div>

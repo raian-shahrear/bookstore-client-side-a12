@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const HomeAdvertisement = ({ books }) => {
   const navigate = useNavigate();
-  const handleDetails = (singleBook) => {
-    navigate(`/books-details/${singleBook._id}`, { state: singleBook });
+  const handleDetails = (singleBook, id) => {
+    navigate(`/books-details/${id}`, { state: singleBook });
   };
   return (
     <section>
@@ -17,7 +17,7 @@ const HomeAdvertisement = ({ books }) => {
             (book) =>
               !book?.isSold && (
                 <img
-                  onClick={() => handleDetails(book)}
+                  onClick={() => handleDetails(book, book?._id)}
                   key={book?._id}
                   title={`click to view details`}
                   className="h-48 w-full aspect-video rounded-md object-cover object-center bg-gray-500 transition-all duration-300 hover:opacity-70 cursor-pointer"
