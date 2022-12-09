@@ -106,7 +106,7 @@ const Login = () => {
   return (
     <section className="dark:bg-gray-900 dark:text-gray-100">
       <div className="px-4 py-10 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl">
-        <div className="flex flex-col justify-center items-center sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
+        <div className="flex flex-col justify-center items-center sm:py-12 lg:py-10 lg:flex-row lg:justify-between">
           <div className="hidden md:flex items-center mt-20 lg:mt-0 h-72 w-full lg:w-1/2">
             <Lottie animationData={loginImg} loop={true} />
           </div>
