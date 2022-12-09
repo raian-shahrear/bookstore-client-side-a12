@@ -9,7 +9,7 @@ const HomeAdvertisement = ({ books }) => {
   return (
     <section>
       <div>
-        <h2 className="text-4xl font-bold text-accent dark:text-info text-center mb-8">
+        <h2 className="text-4xl font-bold text-accent dark:text-info text-center mb-4">
           Top Collections
         </h2>
         <div className={`relative w-full flex gap-6 py-6 overflow-x-auto`}>
