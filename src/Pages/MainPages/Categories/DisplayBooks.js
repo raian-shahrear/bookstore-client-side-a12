@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegClock, FaCheckCircle } from "react-icons/fa";
 import { MdOutlineMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import { toast } from "react-toastify";
+import { UserContext } from "../../../Contexts/AuthContext";
 
 
 const DisplayBooks = ({ book, setAddBook, refetch }) => {
   const [confirmReport, setConfirmReport] = useState(null);
+  const {user} = useContext(UserContext);
 
   // close delete modal
   const closeModal = () => {
@@ -120,11 +122,12 @@ const DisplayBooks = ({ book, setAddBook, refetch }) => {
       {confirmReport && (
         <ConfirmationModal
           title={`Are you want to Report for "${confirmReport?.bookName}"?`}
-          message={`If you will report the book, it can't be Undo!`}
+          message={user?.uid ? `If you will report the book, it can't be Undo!` : `Please login to apply this action`}
           closeModal={closeModal}
           successData={confirmReport}
           successAction={handleReportProduct}
           successClass={`btn btn-sm btn-secondary text-base-100`}
+          btnDisable={!user?.uid && true}
         />
       )}
     </div>

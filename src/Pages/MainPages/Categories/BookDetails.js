@@ -4,11 +4,14 @@ import ConfirmationModal from "../../../Components/Modal/ConfirmationModal";
 import AddProductModal from "./AddProductModal";
 import { toast } from "react-toastify";
 import useTitle from "../../../Hooks/useTitle";
+import { useContext } from "react";
+import { UserContext } from "../../../Contexts/AuthContext";
 
 
 const BookDetails = () => {
   useTitle('Book Details');
   const { state: singleBook } = useLocation();
+  const {user} = useContext(UserContext);
   const [addBook, setAddBook] = useState(null);
   const [confirmReport, setConfirmReport] = useState(null);
   const navigate = useNavigate();
@@ -143,11 +146,12 @@ const BookDetails = () => {
       {confirmReport && (
         <ConfirmationModal
           title={`Are you want to Report for "${confirmReport?.bookName}"?`}
-          message={`If you will report the book, it can't be Undo!`}
+          message={user?.uid ? `If you will report the book, it can't be Undo!` : `Please login to apply this action`}
           closeModal={closeModal}
           successData={confirmReport}
           successAction={handleReportProduct}
           successClass={`btn btn-sm btn-secondary text-base-100`}
+          btnDisable={!user?.uid && true}
         />
       )}
     </div>

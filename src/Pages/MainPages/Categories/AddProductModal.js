@@ -102,7 +102,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
               className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
             />
             <ButtonPrimary type={`submit`} cls={`w-full disabled:bg-primary disabled:text-gray-400`} btnAction={!user?.uid && true}>
-            {uploading && <SmallSpinner />} Submit Order
+            {uploading && <SmallSpinner />} {user?.uid ? 'Submit Order' : 'Please login to order'}
             </ButtonPrimary>
           </form>
         </div>
