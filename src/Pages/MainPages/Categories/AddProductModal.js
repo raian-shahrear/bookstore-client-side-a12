@@ -68,7 +68,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
           <div className="mt-6">
             <h3  className="text-xl font-semibold">{book?.bookName}</h3>
             <p className="text-sm">by <span className="font-medium">{book?.writerName}</span></p>
-            <p className="text-xl font-medium mt-2 text-primary dark:text-info">{book?.resalePrice}</p>
+            <p className="text-xl font-medium mt-2 text-primary dark:text-info">${book?.resalePrice}</p>
           </div>
           <form onSubmit={handleOrder} className="flex flex-col gap-6 mt-12">
             <input
@@ -101,7 +101,7 @@ const AddProductModal = ({book, setAddBook, refetch}) => {
               placeholder="Meeting Location *"
               className="w-full px-2 py-2 bg-gray-200 dark:bg-gray-800 rounded-md focus:ring focus:ring-transparent text-accent dark:text-gray-200 placeholder:text-sm"
             />
-            <ButtonPrimary type={`submit`} cls={`w-full`}>
+            <ButtonPrimary type={`submit`} cls={`w-full disabled:bg-primary disabled:text-gray-400`} btnAction={!user?.uid && true}>
             {uploading && <SmallSpinner />} Submit Order
             </ButtonPrimary>
           </form>
