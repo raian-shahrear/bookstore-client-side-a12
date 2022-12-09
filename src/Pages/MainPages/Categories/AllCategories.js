@@ -7,7 +7,7 @@ import { UserContext } from "../../../Contexts/AuthContext";
 import useTitle from "../../../Hooks/useTitle";
 
 const AllCategories = () => {
-  useTitle('Our Library');
+  useTitle("Our Library");
   const { user } = useContext(UserContext);
   const [addBook, setAddBook] = useState(null);
 
@@ -18,11 +18,7 @@ const AllCategories = () => {
   } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
-      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("access-token")}`,
-        },
-      });
+      const res = await fetch(`${process.env.REACT_APP_HOST_LINK}/books`);
       const data = await res.json();
       return data;
     },
@@ -41,20 +37,16 @@ const AllCategories = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {!user?.uid ? (
-            <h2 className="text-4xl font-bold text-center mt-48 lg:my-60 lg:flex justify-center items-center text-gray-900 dark:text-gray-200">
-              Please login to see the Book Library
-            </h2>
-          ) : (
-            books?.map((book) => (
-              !book?.isSold &&
-              <DisplayBooks
-                key={book?._id}
-                book={book}
-                setAddBook={setAddBook}
-                refetch={refetch}
-              />
-            ))
+          {books?.map(
+            (book) =>
+              !book?.isSold && (
+                <DisplayBooks
+                  key={book?._id}
+                  book={book}
+                  setAddBook={setAddBook}
+                  refetch={refetch}
+                />
+              )
           )}
         </div>
       </div>

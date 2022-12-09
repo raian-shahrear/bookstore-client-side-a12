@@ -19,12 +19,7 @@ const BooksByCategory = () => {
     queryKey: ["books", category?._id],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.REACT_APP_HOST_LINK}/books?id=${category?._id}`, {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("access-token")}`,
-          },
-        }
-      );
+        `${process.env.REACT_APP_HOST_LINK}/books?id=${category?._id}`);
       const data = await res.json();
       return data;
     },

@@ -37,15 +37,15 @@ const routers = createBrowserRouter([
       },
       {
         path: '/all-categories',
-        element: <PrivateRoute><AllCategories /></PrivateRoute>
+        element: <AllCategories />
       },
       {
         path: '/books/:id',
-        element: <PrivateRoute><BooksByCategory /></PrivateRoute>
+        element: <BooksByCategory />
       },
       {
         path: '/books-details/:id',
-        element: <PrivateRoute><BookDetails /></PrivateRoute>
+        element: <BookDetails />
       },
       {
         path: '/blog',

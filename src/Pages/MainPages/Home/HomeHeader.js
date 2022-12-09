@@ -22,15 +22,13 @@ const HomeHeader = () => {
                 a few steps and you will get world famous book with almost free
                 (need to pay some).
               </p>
-              {user?.uid && (
-                <Link
-                  to="/all-categories"
-                  className="lg:mt-6 inline-flex md:text-lg items-center font-bold tracking-wider transition-all duration-300 text-primary hover:text-accent hover:translate-y-1 hover:lg:translate-x-1 hover:lg:translate-y-0 dark:text-info dark:hover:text-primary"
-                >
-                  Explore Our Bookstore
-                  <FaArrowRight className="ml-2" />
-                </Link>
-              )}
+              <Link
+                to="/all-categories"
+                className="lg:mt-6 inline-flex md:text-lg items-center font-bold tracking-wider transition-all duration-300 text-primary hover:text-accent hover:translate-y-1 hover:lg:translate-x-1 hover:lg:translate-y-0 dark:text-info dark:hover:text-primary"
+              >
+                Explore Our Bookstore
+                <FaArrowRight className="ml-2" />
+              </Link>
             </div>
             <div className="w-full lg::px-8 sm:w-8/12 lg:w-6/12">
               <div className="relative">
