@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const HomeCategories = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   useEffect( ()=>{
     axios

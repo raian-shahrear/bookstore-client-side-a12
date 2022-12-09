@@ -305,13 +305,15 @@ const NavBar = () => {
               </div>
             )}
           </div>
-          <label
-            htmlFor="dashboard-drawer"
-            title="dashboard-menu"
-            className="drawer-button text-2xl lg:hidden p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent cursor-pointer text-gray-600 dark:text-base-100"
-          >
-            <RiMenuUnfoldFill />
-          </label>
+          {user?.uid && (
+            <label
+              htmlFor="dashboard-drawer"
+              title="dashboard-menu"
+              className="drawer-button text-2xl lg:hidden p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-gray-200 dark:hover:bg-accent cursor-pointer text-gray-600 dark:text-base-100"
+            >
+              <RiMenuUnfoldFill />
+            </label>
+          )}
         </div>
       </div>
     </div>

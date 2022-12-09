@@ -1,12 +1,26 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare } from "react-icons/fa";
 import { format } from "date-fns";
+import axios from "axios";
 
 
 const Footer = () => {
   const date = new Date();
   const requireDate = format(date, 'PP').split(",")[1];
+
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  useEffect( ()=>{
+    axios
+    .get(`${process.env.REACT_APP_HOST_LINK}/categories`)
+    .then((data) =>setCategories(data.data))
+    .catch((err) => console.error(err));
+  }, [])
+
+  const handleNavigation = (category, id) => { 
+    navigate(`/books/${id}`, { state: category });
+  }
 
   return (
     <div className="bg-gray-100 dark:bg-gray-800">
@@ -74,54 +88,13 @@ const Footer = () => {
                 Category
               </p>
               <ul className="mt-2 space-y-2 text-sm">
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    Education & Reference
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    Children's Fantasy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    Technology & Research
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    World History
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    Mystery & Suspense
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline"
-                  >
-                    Health & Fitness
-                  </Link>
-                </li>
+                {
+                  categories?.map(category => <li>
+                    <button key={category?._id} onClick={()=> handleNavigation(category, category?._id)} className="text-gray-500 dark:text-gray-300 transition-all duration-300 hover:underline">
+                      {category?.categoryName}
+                    </button>
+                  </li>)
+                }
               </ul>
             </div>
           <div>
