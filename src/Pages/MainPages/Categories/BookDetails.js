@@ -146,7 +146,7 @@ const BookDetails = () => {
       {confirmReport && (
         <ConfirmationModal
           title={`Are you want to Report for "${confirmReport?.bookName}"?`}
-          message={user?.uid ? `If you will report the book, it can't be Undo!` : `Please login to apply this action`}
+          message={user?.uid ? `If you will report the book, it can't be Undo!` : <span className="text-red-500">Please login to apply this action</span>}
           closeModal={closeModal}
           successData={confirmReport}
           successAction={handleReportProduct}

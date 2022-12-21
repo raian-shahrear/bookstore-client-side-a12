@@ -180,7 +180,7 @@ const SignUp = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label htmlFor="fname" className="block text-sm">
-                    Name *
+                    Name <span className="text-error">*</span>
                   </label>
                   <input
                     type="text"
@@ -197,7 +197,7 @@ const SignUp = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="img" className="block text-sm">
-                    Upload image *
+                    Upload image <span className="text-error">*</span>
                   </label>
                   <input
                     type="file"
@@ -213,7 +213,7 @@ const SignUp = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm">
-                    Email address *
+                    Email address <span className="text-error">*</span>
                   </label>
                   <input
                     type="email"
@@ -237,7 +237,7 @@ const SignUp = () => {
                 <div className="space-y-2 relative">
                   <div className="flex justify-between">
                     <label htmlFor="password" className="block text-sm">
-                      Password *
+                      Password <span className="text-error">*</span>
                     </label>
                   </div>
                   <input
@@ -264,16 +264,18 @@ const SignUp = () => {
                   >
                     {displayPass ? <FaEye /> : <FaEyeSlash />}
                   </div>
-                  {errors.password && (
+                  {errors.password ? 
                     <span className="text-error">
                       <small>{errors.password?.message}</small>
                     </span>
-                  )}
+                    :
+                    <small className="text-gray-400 font-semibold">[Hints: password at lest have 1 uppercase, 1 number, 1 special character and 6 letter long]</small>
+                  }
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <label htmlFor="option" className="block text-sm">
-                      Please, set your role *
+                      Please, set your role <span className="text-error">*</span>
                     </label>
                   </div>
                   <select

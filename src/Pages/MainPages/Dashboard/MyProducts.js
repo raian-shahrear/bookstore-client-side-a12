@@ -51,7 +51,7 @@ const MyProducts = () => {
       .then((deletedData) => {
         if (deletedData.acknowledged) {
           toast.success(
-            `Your book, ${eachBook?.bookName} has been removed successfully`
+            `"${eachBook?.bookName}" has been removed successfully`
           );
           refetch();
         }

@@ -46,10 +46,17 @@ const AddAProduct = () => {
     const bookCover = form.bookPhoto.files[0];
     const bookCondition = form.condition.value;
     const dateOfPurchase = form.datePurchase.value;
-    const monthOfUse = form.monthUse.value;
-    const originalPrice = form.originalPrice.value;
-    const resalePrice = form.resalePrice.value;
+    const monthOfUse = parseInt(form.monthUse.value);
+    const originalPrice = parseFloat(form.originalPrice.value);
+    const resalePrice = parseFloat(form.resalePrice.value);
     const description = form.description.value;
+
+    if(isNaN(originalPrice)){
+      return toast.error("Original price must be a valid number!");
+    }
+    if(isNaN(resalePrice)){
+      return toast.error("Resale price must be a valid number!");
+    }
 
     const imageHostKey = process.env.REACT_APP_IMGBB_KEY;
     const formData = new FormData();
@@ -121,7 +128,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="name" className="font-medium">
-                  Your name *
+                  Your name <span className="text-error">*</span>
                 </label>
                 <input
                   id="name"
@@ -136,7 +143,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="phone" className="font-medium">
-                  Your contact number *
+                  Your contact number <span className="text-error">*</span>
                 </label>
                 <input
                   id="phone"
@@ -149,7 +156,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="location" className="font-medium">
-                  Your location *
+                  Your location <span className="text-error">*</span>
                 </label>
                 <input
                   id="location"
@@ -162,7 +169,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="book-name" className="font-medium">
-                  Book's name *
+                  Book's name <span className="text-error">*</span>
                 </label>
                 <input
                   id="book-name"
@@ -177,7 +184,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="writer-name" className="font-medium">
-                  Book's writer name *
+                  Book's writer name <span className="text-error">*</span>
                 </label>
                 <input
                   id="writer-name"
@@ -190,7 +197,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="category" className="font-medium">
-                  Book's category *
+                  Book's category <span className="text-error">*</span>
                 </label>
                 <select
                   id="category"
@@ -207,7 +214,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="book-photo" className="font-medium">
-                  Book's cover photo *
+                  Book's cover photo <span className="text-error">*</span>
                 </label>
                 <input
                   id="book-photo"
@@ -219,7 +226,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="condition" className="font-medium">
-                  Set book's condition *
+                  Set book's condition <span className="text-error">*</span>
                 </label>
                 <select
                   id="condition"
@@ -236,7 +243,7 @@ const AddAProduct = () => {
             <div className="grid grid-cols-8 gap-4 col-span-full lg:col-span-4">
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="date-purchase" className="font-medium">
-                  Date of purchase *
+                  Date of purchase <span className="text-error">*</span>
                 </label>
                 <input
                   id="date-purchase"
@@ -248,7 +255,7 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="month-use" className="font-medium">
-                  Month of use *
+                  Month of use <span className="text-error">*</span>
                 </label>
                 <input
                   id="month-use"
@@ -261,11 +268,11 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="original-price" className="font-medium">
-                  Original Price *
+                  Original Price <span className="text-error">*</span>
                 </label>
                 <input
                   id="original-price"
-                  type="number"
+                  type="text"
                   name="originalPrice"
                   required
                   placeholder="product's original price"
@@ -274,11 +281,11 @@ const AddAProduct = () => {
               </div>
               <div className="col-span-full sm:col-span-2">
                 <label htmlFor="resale-price" className="font-medium">
-                  Resale price *
+                  Resale price <span className="text-error">*</span>
                 </label>
                 <input
                   id="resale-price"
-                  type="number"
+                  type="text"
                   name="resalePrice"
                   required
                   placeholder="product's resale price"
@@ -288,7 +295,7 @@ const AddAProduct = () => {
             </div>
             <div className="col-span-full">
               <label htmlFor="description" className="font-medium">
-                Description *
+                Description <span className="text-error">*</span>
               </label>
               <textarea
                 id="description"
