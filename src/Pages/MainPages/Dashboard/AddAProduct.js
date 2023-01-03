@@ -88,7 +88,7 @@ const AddAProduct = () => {
             resalePrice,
             description,
           };
-
+          
           fetch(`${process.env.REACT_APP_HOST_LINK}/books`, {
             method: "POST",
             headers: {
@@ -106,10 +106,16 @@ const AddAProduct = () => {
                 navigate('/dashboard/my-products');
               }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+              console.error(err);
+              setUploading(false);
+            });
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setUploading(false);
+      });
   };
 
   return (

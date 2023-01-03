@@ -3,8 +3,10 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SmallSpinner from "../Spinners/SmallSpinner";
+import { format } from "date-fns";
 
 const CheckoutForm = ({ order }) => {
+  const paymentDate = format(new Date(), "PPpp")
   const {
     _id,
     buyerName,
@@ -93,6 +95,7 @@ const CheckoutForm = ({ order }) => {
         buyerName,
         buyerEmail,
         transactionId: paymentIntent.id,
+        paymentDate
       };
       fetch(`${process.env.REACT_APP_HOST_LINK}/payments`, {
         method: "POST",

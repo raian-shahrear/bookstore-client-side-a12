@@ -153,7 +153,7 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col-reverse justify-between items-center pt-5 pb-10 border-t lg:flex-row">
+        <div className="flex flex-col-reverse justify-between items-center pt-5 pb-10 border-t border-gray-300 dark:border-gray-700 lg:flex-row">
           <p className="text-sm text-accent dark:text-base-100 mt-4 lg:mt-0">
             &copy; Copyright {requireDate} <span className="font-bold">BookStore</span>. All rights reserved.
           </p>

@@ -1,14 +1,14 @@
-# Bookstore
+# BookStore
 A Resale Bookstore Website (Fullstack)
 
-## Live Website
+## Live Website:
 Please visit [https://bookstore-65836.web.app](https://bookstore-65836.web.app/)
 
 ## For accessing to Admin role: 
 adminEmail: `elon@gmail.com`\
 adminPassword: `123ABC$`
 
-## Main Feature
+## Main Feature:
 ### 1. Different functionalities have been added in the dashboard for Admin, Seller and Buyer roles. 
 ### 2. TailwindCss and DaisyUI have been used.
 ### 3. The website is fully responsive for small, medium and large devices.
@@ -18,3 +18,4 @@ adminPassword: `123ABC$`
 ### 7. NoSQL (MongoDB) database has been used.
 ### 8. JWT (access token) has been used for Authorization to distinguish User, Seller and Admin roles.
 ### 9. A payment system has been implemented using Stripe and payment history saved to the database.
+### 10. Nodemailer & SendGrid have been used to send payment confirmation email to a buyer.

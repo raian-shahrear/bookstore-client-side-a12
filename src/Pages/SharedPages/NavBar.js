@@ -9,31 +9,23 @@ import { RiMenuUnfoldFill } from "react-icons/ri";
 const NavBar = () => {
   const { user, signOutUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(null);
-  const [darkIcon, setDarkIcon] = useState(true);
-  const localStorageDarkIcon = localStorage.getItem("dark-icon");
-  useEffect(() => {
+
+  // Theme set
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const handleTheme = () => {
     if (
-      window.matchMedia("(prefers-color-scheme: dark)").matches ||
-      localStorageDarkIcon === false
+      theme === "light" ||
+      window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       setTheme("dark");
     } else {
       setTheme("light");
     }
-  }, [localStorageDarkIcon]);
-
+  };
   useEffect(() => {
-    if (theme === "dark" || !localStorageDarkIcon || !darkIcon) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme, localStorageDarkIcon, darkIcon]);
-
-  // const handleTheme = () => {
-  //   setTheme(theme === "dark" ? "light" : "dark");
-  // }
+    localStorage.setItem("theme", theme);
+    document.body.className = theme;
+  }, [theme]);
 
   // sign out user
   const handleSignOut = () => {
@@ -131,23 +123,17 @@ const NavBar = () => {
         <div className="relative flex items-center justify-between">
           <Link to="/" title="Bookstore" className="inline-flex items-center">
             <img
-              src={theme === "light" && darkIcon ? logoLight : logoDark}
+              src={theme === "light" ? logoLight : logoDark}
               alt="logo"
               className="w-48 h-16"
             />
           </Link>
           <ul className="items-center hidden space-x-5 lg:flex">
             <li className="lg:mt-2">
-              <label className="swap swap-rotate">
-                <input type="checkbox" />
-                {!darkIcon ? (
+              <button onClick={handleTheme}>
+                {theme === "light" ? (
                   <svg
-                    onClick={() => {
-                      setDarkIcon(!darkIcon);
-                      localStorage.setItem("dark-icon", !darkIcon);
-                      theme === "light" && setTheme("dark");
-                    }}
-                    className="fill-info w-8 h-8 mr-10"
+                    className="fill-primary w-8 h-8 mr-10"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -155,19 +141,14 @@ const NavBar = () => {
                   </svg>
                 ) : (
                   <svg
-                    onClick={() => {
-                      setDarkIcon(!darkIcon);
-                      localStorage.setItem("dark-icon", !darkIcon);
-                      theme === "dark" && setTheme("light");
-                    }}
-                    className="fill-primary w-8 h-8 mr-10"
+                    className="fill-info w-8 h-8 mr-10"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
                     <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
                   </svg>
                 )}
-              </label>
+              </button>
             </li>
             {menuItems}
             {user?.uid && (
@@ -222,9 +203,7 @@ const NavBar = () => {
                         className="inline-flex items-center"
                       >
                         <img
-                          src={
-                            theme === "light" && darkIcon ? logoLight : logoDark
-                          }
+                          src={theme === "light" ? logoLight : logoDark}
                           alt="logo"
                           className="w-48 h-16"
                         />
@@ -251,16 +230,10 @@ const NavBar = () => {
                   </div>
                   <ul className="flex justify-end">
                     <li className="">
-                      <label className="swap swap-rotate">
-                        <input type="checkbox" />
-                        {!darkIcon ? (
+                      <button onClick={handleTheme}>
+                        {theme === "light" ? (
                           <svg
-                            onClick={() => {
-                              setDarkIcon(!darkIcon);
-                              localStorage.setItem("dark-icon", !darkIcon);
-                              theme === "light" && setTheme("dark");
-                            }}
-                            className="fill-info w-8 h-8"
+                            className="fill-info w-8 h-8 mr-10"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                           >
@@ -268,19 +241,14 @@ const NavBar = () => {
                           </svg>
                         ) : (
                           <svg
-                            onClick={() => {
-                              setDarkIcon(!darkIcon);
-                              localStorage.setItem("dark-icon", !darkIcon);
-                              theme === "dark" && setTheme("light");
-                            }}
-                            className="fill-primary w-8 h-8"
+                            className="fill-primary w-8 h-8 mr-10"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                           >
                             <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
                           </svg>
                         )}
-                      </label>
+                      </button>
                     </li>
                   </ul>
                   <nav>

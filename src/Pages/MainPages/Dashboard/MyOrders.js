@@ -90,7 +90,7 @@ const MyOrders = () => {
                     Your Email
                   </th>
                   <th scope="col" className="py-3 px-2 w-1/4">
-                    Book Ordered
+                    Ordered Book
                   </th>
                   <th scope="col" className="py-3 px-2 text-center w-1/4">
                     Action
