@@ -4,9 +4,6 @@ A Resale Bookstore Website (Fullstack)
 ## Live Website:
 Please visit [https://bookstore-65836.web.app](https://bookstore-65836.web.app/)
 
-## For accessing to Admin role: 
-adminEmail: `elon@gmail.com`\
-adminPassword: `123ABC$`
 
 ## Main Feature:
 ### 1. Different functionalities have been added in the dashboard for Admin, Seller and Buyer roles. 

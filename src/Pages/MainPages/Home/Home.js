@@ -7,6 +7,7 @@ import HomeReview from "./HomeReview";
 import { useQuery } from "@tanstack/react-query";
 import PrimarySpinner from "../../../Components/Spinners/PrimarySpinner";
 import useTitle from "../../../Hooks/useTitle";
+import HomeAuthors from "./HomeAuthors/HomeAuthors";
 
 const Home = () => {
   useTitle('Home');
@@ -42,6 +43,9 @@ const Home = () => {
       </section>
       <section className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl pb-20">
         <HomeFAQ />
+      </section>
+      <section className="px-4 md:px-24 lg:px-8 mx-auto md:max-w-full lg:max-w-screen-2xl pb-20">
+        <HomeAuthors />
       </section>
     </main>
   );

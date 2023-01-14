@@ -140,6 +140,7 @@ const Login = () => {
                     })}
                     id="email"
                     placeholder="valid email address"
+                    defaultValue="raka@gmail.com"
                     className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                   />
                   {errors.email && (
@@ -161,6 +162,7 @@ const Login = () => {
                     })}
                     id="password"
                     placeholder="******"
+                    defaultValue="123ABC$"
                     className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
                   />
                   <div
